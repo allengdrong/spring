@@ -1,37 +1,30 @@
-package org.zerock.board.service;
+package org.zerock.board.dao;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.zerock.board.dao.BoardDAO;
+import org.springframework.stereotype.Repository;
 import org.zerock.board.vo.BoardVO;
 
-import lombok.Setter;
 import lombok.extern.log4j.Log4j;
 
 //자동 생성하게하는 어노테이션
 //@Controller, @Service, @Repository, @Component, @RestController, @Advice
 ///WEB-INF/spring/appServlet/servlet-context.xml 설정이 되어 있어야 한다. component-scan
-@Service
+@Repository
 @Log4j
-public class BoardServiceImpl implements BoardService {
+public class BoardDAOImpl implements BoardDAO {
 
-	//@Setter - lombok 사용, @Autowired - Spring 사용
-	// 대신 사용 가능한 어노테이션 : @Autowired - Spring, @Inject - java
-	// DI 적용 시 BoardService 타입 : 1. BoardService 인터페이스 2. BoardServiceImpl 클래스
-	@Setter(onMethod_ = @Autowired )
-	private BoardDAO dao;
-	
 	@Override
 	public List<BoardVO> list() throws Exception {
 		// TODO Auto-generated method stub
-		log.info("list() - 게시판 리스트 서비스 실행 ******");
-		
-		dao.getTotalRow();
-		
-		dao.list();
-		
+		log.info("list() - 게시판 리스트 데이터 가져오기 +++++++++++++");
+		return null;
+	}
+
+	@Override
+	public Long getTotalRow() throws Exception {
+		// TODO Auto-generated method stub
+		log.info("getTotalRow() - 게시판 전체 데이터 갯수 가져오기 +++++++++++++");
 		return null;
 	}
 
@@ -39,6 +32,12 @@ public class BoardServiceImpl implements BoardService {
 	public BoardVO view() throws Exception {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public int increase() throws Exception {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 	@Override
@@ -59,4 +58,5 @@ public class BoardServiceImpl implements BoardService {
 		return 0;
 	}
 
+	// 
 }

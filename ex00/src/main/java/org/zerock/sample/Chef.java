@@ -4,9 +4,9 @@ import org.springframework.stereotype.Component;
 
 import lombok.Data;
 
-//ÀÚµ¿ »ı¼ºÇÏ°Ô ÇÏ´Â ¾î³ëÅ×ÀÌ¼Ç
-//@Controller, @Service, @Repository, @Component, @Restcontroller, @Advice
-///WEB-INF/spring/appServlet/root-context.xml ¼³Á¤ÀÌ µÇ¾î ÀÖ¾î¾ß ÇÑ´Ù. component-scan
+// ìë™ ìƒì„±í•˜ê²Œí•˜ëŠ” ì–´ë…¸í…Œì´ì…˜
+// @Controller, @Service, @Repository, @Component, @Restcontroller, @Advice
+// /WEB-INF/spring/root-context.xml ì„¤ì •ì´ ë˜ì–´ ìˆì–´ì•¼ í•œë‹¤. component-scan
 @Component
 @Data
 public class Chef {

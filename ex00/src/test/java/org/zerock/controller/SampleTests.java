@@ -13,25 +13,25 @@ import lombok.Setter;
 import lombok.extern.log4j.Log4j;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-// °´Ã¼ »ı¼ºÀÌ³ª DI Àû¿ëÀÌ src/main/java -> ÀÚµ¿ Àû¿ë, src/test/java -> ÀÚµ¿ Àû¿ë ¾ÈµÊ
+// ê°ì²´ ìƒì„±ì´ë‚˜ DI ì ìš©ì´ src/main/java -> ìë™ ì ìš©, src/test/java ->  ìë™ ì ìš© ì•ˆë¨(ì½ì–´ì˜¬ íŒŒì¼ ì§€ì •)
 @ContextConfiguration("file:src/main/webapp/WEB-INF/spring/root-context.xml")
-// log °´Ã¼ »ç¿ëÇÏ±â À§ÇÑ ÁöÁ¤. log - »ç¿ë ³»¿ª Ãâ·Â
+// log ê°ì²´ ì‚¬ìš©í•˜ê¸° ìœ„í•œ ì§€ì •. log - ì‚¬ìš© ë‚´ì—­ ì¶œë ¥
 @Log4j
 public class SampleTests {
-	
-	// ÀÚµ¿ DI - »ı¼ºµÈ °°Àº class¸¦ ÀÚµ¿À¸·Î ³Ö¾îÁØ´Ù. setter ÀÌ¿ë
+
+	// ìë™ DI - ìƒì„±ëœ ê°™ì€ í´ë˜ìŠ¤ë¥¼ ìë™ìœ¼ë¡œ ë„£ì–´ì¤€ë‹¤. setter ì´ìš©
 	@Setter(onMethod_ = {@Autowired})
-	private Restaurant restaurant;
+	private Restaurant restaurant; 
 	
-	// ½ÇÁ¦ÀûÀÎ Å×½ºÆ®¸¦ ÇÏ´Â ¸Ş¼­µå ÀÛ¼º
+	// ì‹¤ì œì ì¸ í…ŒìŠ¤íŠ¸ë¥¼ í•˜ëŠ” ë©”ì„œë“œ ì‘ì„±
 	@Test
 	public void testExist() {
-		// not null È®ÀÎ - null ÀÌ¸é ¿¹¿Ü ¹ß»ı
+		// not null í™•ì¸ - null ì´ë©´ ì˜ˆì™¸ ë°œìƒ
 		assertNotNull(restaurant);
 		
 		log.info(restaurant);
-		log.info("-----------------------------");
+		log.info("-------------------------------------------------");
 		log.info(restaurant.getChef());
 	}
-
+	
 }

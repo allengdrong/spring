@@ -1,82 +1,101 @@
 package org.zerock.board.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.zerock.board.service.BoardService;
 
+import lombok.Setter;
 import lombok.extern.log4j.Log4j;
 
+//ìë™ ìƒì„±í•˜ê²Œí•˜ëŠ” ì–´ë…¸í…Œì´ì…˜
+//@Controller, @Service, @Repository, @Component, @RestController, @Advice
+///WEB-INF/spring/appServlet/servlet-context.xml ì„¤ì •ì´ ë˜ì–´ ìˆì–´ì•¼ í•œë‹¤. component-scan
 @Controller
 @RequestMapping("/board")
 @Log4j
 public class BoardController {
 
 	private final String MODULE = "board";
-
-	// ½ÇÇàÇÒ ¸Ş¼­µå - ¸®½ºÆ®
-	// ¸ÊÇÎ - get ¹æ½Ä
+	
+	//@Setter - lombok ì‚¬ìš©, @Autowired - Spring ì‚¬ìš©
+	// ëŒ€ì‹  ì‚¬ìš© ê°€ëŠ¥í•œ ì–´ë…¸í…Œì´ì…˜ : @Autowired - Spring, @Inject - java
+	// DI ì ìš© ì‹œ BoardService íƒ€ì… : 1. BoardService ì¸í„°í˜ì´ìŠ¤ 2. BoardServiceImpl í´ë˜ìŠ¤
+	@Setter(onMethod_ = @Autowired )
+	private BoardService service;
+	
+	// ì‹¤í–‰í•  ë©”ì„œë“œ - ë¦¬ìŠ¤íŠ¸
+	// ë§µí•‘ - get ë°©ì‹. list.do
 	@GetMapping("/list.do")
-	public String list() {
-
-		log.info("list() - °Ô½ÃÆÇ ¸®½ºÆ® ------------------------");
-
+	public String list() throws Exception {
+		
+		log.info("list() - ê²Œì‹œíŒ ë¦¬ìŠ¤íŠ¸ --------------");
+		
+		service.list();
+		
 		return MODULE + "/list";
 	}
-
-	// ½ÇÇàÇÒ ¸Ş¼­µå - ¸®½ºÆ®
-	// ¸ÊÇÎ - get ¹æ½Ä
+	
+	// ì‹¤í–‰í•  ë©”ì„œë“œ - ê¸€ë³´ê¸°
+	// ë§µí•‘ - get ë°©ì‹. view.do
 	@GetMapping("/view.do")
 	public String view() {
-
-		log.info("view() - °Ô½ÃÆÇ ±Ûº¸±â ------------------------");
-
+		
+		log.info("view() - ê²Œì‹œíŒ ê¸€ë³´ê¸° --------------");
+		
 		return MODULE + "/view";
 	}
-
-	// ½ÇÇàÇÒ ¸Ş¼­µå - ±Û¾²±â Æû
-	// ¸ÊÇÎ - get ¹æ½Ä
+	
+	// ì‹¤í–‰í•  ë©”ì„œë“œ - ê¸€ì“°ê¸° í¼
+	// ë§µí•‘ - get ë°©ì‹. write.do
 	@GetMapping("/write.do")
 	public String writeForm() {
-
-		log.info("writeForm() - °Ô½ÃÆÇ ±Û¾²±â ------------------------");
+		
+		log.info("writeForm() - ê²Œì‹œíŒ ê¸€ì“°ê¸° í¼ --------------");
+		
 		return MODULE + "/write";
 	}
-
-	// ½ÇÇàÇÒ ¸Ş¼­µå - ±Û¾²±â Ã³¸®
-	// ¸ÊÇÎ - post ¹æ½Ä .write.do
+	
+	// ì‹¤í–‰í•  ë©”ì„œë“œ - ê¸€ì“°ê¸° ì²˜ë¦¬
+	// ë§µí•‘ - post ë°©ì‹. write.do
 	@PostMapping("/write.do")
 	public String write() {
-
-		log.info("write() - °Ô½ÃÆÇ ±Û¾²±â Ã³¸® ------------------------");
+		
+		log.info("write() - ê²Œì‹œíŒ ê¸€ì“°ê¸° ì²˜ë¦¬ --------------");
+		
 		return "redirect:list.do";
 	}
-
-	// ½ÇÇàÇÒ ¸Ş¼­µå - ±Û¼öÁ¤ Æû
-	// ¸ÊÇÎ - get ¹æ½Ä
+	
+	// ì‹¤í–‰í•  ë©”ì„œë“œ - ê¸€ìˆ˜ì • í¼
+	// ë§µí•‘ - get ë°©ì‹. write.do
 	@GetMapping("/update.do")
 	public String updateForm() {
-
-		log.info("updateForm() - °Ô½ÃÆÇ ±Û¼öÁ¤ ------------------------");
+		
+		log.info("updateForm() - ê²Œì‹œíŒ ê¸€ìˆ˜ì • í¼ --------------");
+		
 		return MODULE + "/update";
 	}
-
-	// ½ÇÇàÇÒ ¸Ş¼­µå - ±Û¼öÁ¤ Ã³¸®
-	// ¸ÊÇÎ - post ¹æ½Ä .write.do
+	
+	// ì‹¤í–‰í•  ë©”ì„œë“œ - ê¸€ìˆ˜ì • ì²˜ë¦¬
+	// ë§µí•‘ - post ë°©ì‹. update.do
 	@PostMapping("/update.do")
 	public String update() {
-
-		log.info("update() - °Ô½ÃÆÇ ±Û¼öÁ¤ Ã³¸® ------------------------");
+		
+		log.info("update() - ê²Œì‹œíŒ ê¸€ìˆ˜ì • ì²˜ë¦¬ --------------");
+		
 		return "redirect:view.do";
 	}
-
-	// ½ÇÇàÇÒ ¸Ş¼­µå - ±Û»èÁ¦ Ã³¸®
-	// ¸ÊÇÎ - post ¹æ½Ä .delete.do
+	
+	// ì‹¤í–‰í•  ë©”ì„œë“œ - ê¸€ì‚­ì œ ì²˜ë¦¬
+	// ë§µí•‘ - get ë°©ì‹. delete.do
 	@GetMapping("/delete.do")
 	public String delete() {
-
-		log.info("delete() - °Ô½ÃÆÇ ±Û»èÁ¦ Ã³¸® ------------------------");
+		
+		log.info("delete() - ê²Œì‹œíŒ ê¸€ì‚­ì œ ì²˜ë¦¬ --------------");
+		
 		return "redirect:list.do";
 	}
-
+	
 }

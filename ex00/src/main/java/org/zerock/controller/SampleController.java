@@ -5,18 +5,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import lombok.extern.log4j.Log4j;
 
-// ÀÚµ¿ »ı¼ºÇÏ°Ô ÇÏ´Â ¾î³ëÅ×ÀÌ¼Ç
-//@Controller, @Service, @Repository, @Component, @Restcontroller, @Advice
-///WEB-INF/spring/appServlet/root-context.xml ¼³Á¤ÀÌ µÇ¾î ÀÖ¾î¾ß ÇÑ´Ù. component-scan
+//ìë™ ìƒì„±í•˜ê²Œí•˜ëŠ” ì–´ë…¸í…Œì´ì…˜
+//@Controller, @Service, @Repository, @Component, @RestController, @Advice
+///WEB-INF/spring/appServlet/servlet-context.xml ì„¤ì •ì´ ë˜ì–´ ìˆì–´ì•¼ í•œë‹¤. component-scan
 @Controller
 @RequestMapping("/sample")
 @Log4j
 public class SampleController {
 
-	// ½ÇÇàÇÒ ¸Ş¼­µå
+	// ì‹¤í–‰í•  ë©”ì„œë“œ
 	@RequestMapping("")
 	public void basic() {
-		log.info("basic-------------------------");
+		log.info("basic------------------");
 	}
 	
 }
