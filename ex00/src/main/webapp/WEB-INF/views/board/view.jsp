@@ -8,6 +8,7 @@
 </head>
 <body>
 <h1>게시판 글보기</h1>
+<div>${view }</div>
 <a href="list.do">리스트</a>
 <a href="update.do">글수정</a>
 <a href="delete.do">글삭제</a>

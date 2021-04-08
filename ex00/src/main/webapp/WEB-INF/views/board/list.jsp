@@ -1,15 +1,15 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="EUC-KR">
-<title>°Ô½ÃÆÇ ¸®½ºÆ®</title>
+<meta charset="UTF-8">
+<title>ê²Œì‹œíŒ ë¦¬ìŠ¤íŠ¸</title>
 </head>
 <body>
-<h1>°Ô½ÃÆÇ ¸®½ºÆ®</h1>
-<a href="write.do">±Û¾²±â</a>
-<a href="view.do">±Ûº¸±â</a>
-
+<h1>ê²Œì‹œíŒ ë¦¬ìŠ¤íŠ¸</h1>
+<div>${list }</div>
+<a href="view.do">ê¸€ë³´ê¸°</a><br/>
+<a href="write.do">ê¸€ì“°ê¸°</a>
 </body>
 </html>
