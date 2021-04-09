@@ -3,21 +3,43 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.zerock.board.mapper.BoardMapper">
 
+	<!-- 1. 게시판 리스트 : 강제 1페이지 -->
 	<select id="list" resultType="org.zerock.board.vo.BoardVO">
-	select rnum, no, title, writer, writeDate, hit
-	from (
-		select rownum rnum, no, title, writer, writeDate, hit
+		select rnum, no, title, writer, writeDate, hit
 		from (
-				select no, title, writer, writeDate, hit from board
-				order by no desc
+			select rownum rnum, no, title, writer, writeDate, hit
+			from (
+					select no, title, writer, writeDate, hit from board
+					order by no desc
+			)
 		)
-	)
-	where rnum between 1 and 10
+		where rnum between 1 and 10
 	</select>
 	
+	<!-- 2. 게시판 글보기 -->
 	<select id="view" resultType="org.zerock.board.vo.BoardVO">
-	select no, title, content, writer, writeDate, hit
-	from board where no = 1
+		select no, title, content, writer, writeDate, hit
+		from board
+		where no = #{no}
 	</select>
+	
+	<!-- 3. 게시판 글쓰기 -->
+	<insert id="write">
+		insert into board(no, title, content, writer)
+		values(board_seq.nextval, #{title}, #{content}, #{writer})
+	</insert>
+	
+	<!-- 4. 게시판 글수정 -->
+	<update id="update">
+		update board
+		set title = #{title}, content = #{content}, writer = #{writer}
+		where no = #{no}
+	</update>
+	
+	<!-- 5. 게시판 글삭제 -->
+	<delete id="delete">
+		delete from board
+		where no = #{no}
+	</delete>
 
 </mapper>
