@@ -4,6 +4,7 @@ import java.util.Date;
 
 import lombok.Data;
 
+// getter / setter / toString / 생성자 -> lombok이 해결해 준다.
 @Data
 public class BoardVO {
 	
@@ -15,6 +16,5 @@ public class BoardVO {
 	private Date writeDate;
 	private Long hit;
 	
-	// getter / setter / toString / 생성자 -> lombok이 해결해 준다.
 
 }
