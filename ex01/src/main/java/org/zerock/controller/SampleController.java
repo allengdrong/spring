@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 import org.zerock.domain.SampleDTO;
 import org.zerock.domain.SampleDTOList;
 
@@ -182,6 +183,22 @@ public class SampleController {
 			log.info("name : " + file.getOriginalFilename());
 			log.info("size : " + file.getSize());
 		}
+	}
+	
+	// ModelAndView -> 메서드에서 생성해서 데이터를 담은 후 돌려준다.
+	@GetMapping("/mav")
+	public ModelAndView exMav() {
+		ModelAndView mav = new ModelAndView();
+		
+		// 데이터 담기 -> model 대신 사용
+		// model.addAttribute("name", "이영환");
+		mav.addObject("name", "이영환");
+		
+		// jsp 정보 담기
+		// return "mav"
+		mav.setViewName("mav");
+		
+		return mav;
 	}
 
 }
