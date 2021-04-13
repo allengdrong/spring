@@ -4,12 +4,18 @@ import static org.springframework.test.web.client.match.MockRestRequestMatchers.
 
 import java.util.ArrayList;
 
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.zerock.domain.SampleDTO;
 import org.zerock.domain.SampleDTOList;
 
@@ -127,6 +133,55 @@ public class SampleController {
 		log.info("dto : " + dto);
 		log.info("page : " + page);
 		
+	}
+	
+	// 객체 타입의 데이터를 순수 데이터로 전송 -> JSON 데이터 활용
+	// 순수한 데이터를 전달하는 메서드만 모아서 @RestController를 만든다.
+	@GetMapping("/ex06")
+	public @ResponseBody SampleDTO ex06() {
+		log.info("ex06... DTO data return ");
+		SampleDTO dto = new SampleDTO();
+		dto.setAge(10);
+		dto.setName("홍길동");
+		
+		return dto;
+	}
+	
+	// 처리된 상태코드와 함께 보내는 ResponseEntity
+	@GetMapping("/ex07")
+	public ResponseEntity<String> ex07() {
+		log.info("ex07... ResponseEntity return ");
+		
+		String msg =  "{name:'홍길동'}";
+		
+		HttpHeaders header = new HttpHeaders();
+		header.add("Content-Type", "application/json;charset=UTF-8");
+		
+		return new ResponseEntity<>(msg, header, HttpStatus.OK);
+	}
+	
+	// file upload Form
+	@GetMapping("/exUpload")
+	public void exUpload() {
+		log.info("/exUpload.....");
+	}
+	
+	// file upload 처리
+	@PostMapping("/exUploadPost")
+	public void exUploadPost(ArrayList<MultipartFile> files) {
+		// 반복문(for) 람다식 표시
+		files.forEach(file -> {
+			if(!file.getOriginalFilename().equals("")) {
+				log.info("[upload File List] ----------------- ");
+				log.info("name : " + file.getOriginalFilename());
+				log.info("size : " + file.getSize());
+			}
+		});
+		for(MultipartFile file : files) {
+			log.info("[upload File List] ----------------- ");
+			log.info("name : " + file.getOriginalFilename());
+			log.info("size : " + file.getSize());
+		}
 	}
 
 }

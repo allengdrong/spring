@@ -24,7 +24,24 @@
 		<beans:property name="suffix" value=".jsp" />
 	</beans:bean>
 	
+	<!-- spring fileupload 프로그램 사용 : 프로그램 안에서 사용하는 객체가 commons-fileupload -->
+	<!-- pom.xml에 commons-fileupload dependency로 등록이 되어 있어야 한다. -->
+	<beans:bean id="multipartResolver"
+	class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<!-- 파일 업로드의 파일의 encoding방식 : utf-8 -->
+		<beans:property name="defaultEncoding" value="utf-8" />
+		<!-- 업로드할 전체 파일의 용량 제한 1024*1024*100 - 100MB -->
+		<beans:property name="maxUploadSize" value="104857600" />
+		<!-- 업로드할 한개의 파일의 용량 제한 1024*1024*10 - 10MB -->
+		<beans:property name="maxUploadSizePerFile" value="10485760" />
+		<!-- 업로드할 용량이 커지면 임시폴더에 임시파일을 사용 : 사용할 폴더 지정 -->
+		<beans:property name="uploadTempDir" value="file:/C:/upload/tmp" />
+		<!-- 용량이 커져 임시폴더의 임시파일을 사용하는 용량의 기준 -->
+		<beans:property name="maxInMemorySize" value="10485756" />
+	</beans:bean>
+	
 	<context:component-scan base-package="org.zerock.controller" />
+	<context:component-scan base-package="org.zerock.exception" />
 	
 	
 	
