@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>게시판 리스트</title>
+<title>공지사항 리스트</title>
 
 <!-- bootstrap 라이브러리 등록 CDN방식 : sitemesh에서 decorator.jsp에서 한꺼번에 해결 -->
  <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -25,19 +25,18 @@
 $(function() {
 	
 	${(empty msg)?"":"alert('"+= msg +="');"}
-	
 	$(".dataRow").click(function(){
 		var no = $(this).find(".no").text();
-		location = "view.do?no=" + no + "&inc=1";
+		location = "view.do?no=" + no;
 	});
+	
 });
 </script>
 
 </head>
 <body>
 <div class="container">
-	<h1>게시판 리스트</h1>
-	<ul class="list-group">
+<ul class="list-group">
 		<c:if test="${empty list }">
 			<li class="list-group-item">
 				데이터가 존재하지 않습니다.
@@ -50,15 +49,11 @@ $(function() {
 						<span class="no">${vo.no }</span>.
 						${vo.title }
 					</div>
-					${vo.writer }
-					(<fmt:formatDate value="${vo.writeDate }"/>)
-					<span class="badge">${vo.hit }</span>
+					시작일 : (<fmt:formatDate value="${vo.startDate }"/>) 종료일 : (<fmt:formatDate value="${vo.endDate }"/>)
 				</li>
 			</c:forEach>
 		</c:if>
 	</ul>
-	<!-- a tag, js : location, 주소 입력 : get 방식으로 넘어 간다. 
-	post방식 꼭 지정을 해야 한다. -->
 	<a href = "write.do" class="btn btn-default">글쓰기</a>
 </div>
 </body>
