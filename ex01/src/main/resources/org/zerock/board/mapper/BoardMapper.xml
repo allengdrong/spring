@@ -7,14 +7,66 @@
 	<!-- 1. 게시판 리스트 -->
 	<!-- id="method" -->
 	<select id="list" resultType="org.zerock.board.vo.BoardVO">
-		select no, title, writer, writeDate, hit
-		from board
-		order by no desc
+		select rnum, no, title, writer, writeDate, hit
+		from
+		(	
+			select rownum rnum, no, title, writer, writeDate, hit
+			from(
+				select no, title, writer, writeDate, hit
+				from board
+			
+			<!-- mybatis에서는 데이터 자동 변환을 한다. 글자가 한자이면 char -->
+			<include refid = "search" />
+			
+				order by no desc
+			)
+		)
+		where rnum between #{startRow} and #{endRow}
 	</select>
+	<!--  검색 조건 쿼리 따로 저장하기 -->
+	<sql id = "search">
+	
+			<!-- mybatis에서는 데이터 자동 변환을 한다. 글자가 한자이면 char -->
+		<if test="word != null and word != ''.toString">
+			<!-- 검색하는 데이터가 있는 경우 where가 나온다. -->
+			where 1 = 0
+			<if test="key == 't'.toString()">
+				OR title like '%' || #{word} || '%'
+			</if>
+			<if test="key == 'c'.toString()">
+				OR content like '%' || #{word} || '%'
+			</if>
+			<if test="key == 'w'.toString()">
+				OR writer like '%' || #{word} || '%'
+			</if>
+			<if test="key == 'tc'">
+				OR title like '%' || #{word} || '%'
+				OR content like '%' || #{word} || '%'
+			</if>
+			<if test="key == 'tw'">
+				OR title like '%' || #{word} || '%'
+				OR writer like '%' || #{word} || '%'
+			</if>
+			<if test="key == 'cw'">
+				OR content like '%' || #{word} || '%'
+				OR writer like '%' || #{word} || '%'
+			</if>
+			<if test="key == 'tcw'">
+				OR title like '%' || #{word} || '%'
+				OR content like '%' || #{word} || '%'
+				OR writer like '%' || #{word} || '%'
+			</if>
+		</if>
+	</sql>
+	
 	
 	<!-- 1-1. 게시판 전체 글의 갯수 -->
 	<select id="getTotalRow" resultType="java.lang.Long">
 		select count(*) from board
+		
+		<!-- mybatis에서는 데이터 자동 변환을 한다. 글자가 한자이면 char -->
+		<include refid="search" />
+		
 	</select>
 	
 	<!-- 2. 게시판 글보기 -->

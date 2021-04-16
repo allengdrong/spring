@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="pageObject" tagdir="/WEB-INF/tags" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -27,7 +28,9 @@ $(function() {
 	${(empty msg)?"":"alert('"+= msg +="');"}
 	$(".dataRow").click(function(){
 		var no = $(this).find(".no").text();
-		location = "view.do?no=" + no;
+		var query = ${(empty pageObject)?"''":"'&page=" += pageObject.page += "&perPageNum=" += pageObject.perPageNum += "'"};
+		query += ${(empty pageObject.word)?"''":"'&key=" += pageObject.key += "&word=" += pageObject.word += "'"};
+		location = "view.do?no=" + no + query;
 	});
 	
 });
@@ -36,7 +39,31 @@ $(function() {
 </head>
 <body>
 <div class="container">
-<ul class="list-group">
+
+<h1 class="row">
+	<a href="list.do">공지사항 리스트</a>
+</h1>
+<form>
+	<input name="page" value="${pageObject.page }" type="hidden" />
+	<input name="perPageNum" value="${pageObject.perPageNum }" type="hidden" />
+	  <div class="input-group">
+	  <span class="input-group-addon">
+	  	<select name="key">
+	  		<option value="t" ${(pageObject.key == "t")?"selected":"" }>제목</option>
+	  		<option value="c" ${(pageObject.key == "c")?"selected":"" }>내용</option>
+	  		<option value="tc" ${(pageObject.key == "tc")?"selected":"" }>제목+내용</option>
+	  	</select>
+	  </span>
+	    <input type="text" class="form-control" placeholder="Search"
+	    name="word" value="${pageObject.word }">
+	    <div class="input-group-btn">
+	      <button class="btn btn-default" type="submit">
+	        <i class="glyphicon glyphicon-search"></i>
+	      </button>
+	    </div>
+	  </div>
+	</form>
+	<ul class="list-group">
 		<c:if test="${empty list }">
 			<li class="list-group-item">
 				데이터가 존재하지 않습니다.
@@ -54,7 +81,12 @@ $(function() {
 			</c:forEach>
 		</c:if>
 	</ul>
-	<a href = "write.do" class="btn btn-default">글쓰기</a>
+	<a href = "write.do?perPageNum=${pageObject.perPageNum }" class="btn btn-default">글쓰기</a>
+	
+	<div>
+		<pageObject:pageNav listURI="list.do" pageObject="${pageObject }" 
+		query="&key=${pageObject.key }&word=${pageObject.word }"/>
+	</div>
 </div>
 </body>
 </html>

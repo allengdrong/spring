@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>게시판 글보기</title>
+<title>공지사항 글보기</title>
 
 <!-- bootstrap 라이브러리 등록 CDN방식 : sitemesh에서 decorator.jsp에서 한꺼번에 해결 -->
  <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -46,7 +46,7 @@ $(function(){
 </head>
 <body>
 <div class="container">
-<h1>게시판 글보기</h1>
+<h1>공지사항 글보기</h1>
 <!-- 데이터 표시하는 부분 -->
 <ul class="list-group">
 	<li class="list-group-item row">
@@ -62,20 +62,30 @@ $(function(){
   		<div class="col-md-10"><pre>${vo.content }</pre></div>
 	</li>
 	<li class="list-group-item row">
-  		<div class="col-md-2 title_label">작성자</div>
-  		<div class="col-md-10">${vo.writer }</div>
-	</li>
-	<li class="list-group-item row">
-  		<div class="col-md-2 title_label">작성일</div>
+  		<div class="col-md-2 title_label">공지시작일</div>
   		<div class="col-md-10">
-  			<fmt:formatDate value="${vo.writeDate }" pattern="yyyy.MM.dd" />
-  			<fmt:formatDate value="${vo.writeDate }" pattern="hh:mm:ss" />
+	  		<fmt:formatDate value="${vo.startDate }" pattern="yyyy.MM.dd" />
   		</div>
 	</li>
 	<li class="list-group-item row">
-  		<div class="col-md-2 title_label">조회수</div>
-  		<div class="col-md-10">${vo.hit }</div>
+  		<div class="col-md-2 title_label">공지종료일</div>
+  		<div class="col-md-10">
+  			<fmt:formatDate value="${vo.endDate }" pattern="yyyy.MM.dd" />
+  		</div>
 	</li>
+	<li class="list-group-item row">
+  		<div class="col-md-2 title_label">공지작성일</div>
+  		<div class="col-md-10">
+  			<fmt:formatDate value="${vo.writeDate }" pattern="yyyy.MM.dd" />
+  		</div>
+	</li>
+	<li class="list-group-item row">
+  		<div class="col-md-2 title_label">공지수정일</div>
+  		<div class="col-md-10">
+  			<fmt:formatDate value="${vo.updateDate }" pattern="yyyy.MM.dd" />
+  		</div>
+	</li>
+	
 </ul>
 <a href="update.do?no=${vo.no }&page=${pageObject.page}&perPageNum=${pageObject.perPageNum}&key=${pageObject.key}&word=${pageObject.word}"
  class="btn btn-default">수정</a>
@@ -92,7 +102,7 @@ $(function(){
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">게시판 글삭제 비밀번호 입력</h4>
+        <h4 class="modal-title">공지사항 글삭제 비밀번호 입력</h4>
       </div>
       <div class="modal-body">
         <form action="delete.do" method="post" id="modal_form">

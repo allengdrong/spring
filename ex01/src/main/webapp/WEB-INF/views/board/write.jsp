@@ -25,6 +25,7 @@
 	<div class="container">
 		<h1>게시판 글쓰기 Form</h1>
 		<form action="write.do" method="post">
+		<input name="perPageNum" type="hidden" value="${param.perPageNum }">
 			<div class="form-group">
 				<label for="title">제목:</label>
 				<!-- required : 필수 입력, placeholder : 입력의 초기 안내,

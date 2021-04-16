@@ -1,42 +1,34 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>게시판 글수정</title>
+<title>공지사항 글수정</title>
 
 <!-- bootstrap 라이브러리 등록 CDN방식 : sitemesh에서 decorator.jsp에서 한꺼번에 해결 -->
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<link rel="stylesheet"	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
 <script type="text/javascript">
-	$(function() {
-		$(".cancelBackBtn").click(function() {
+	$(function(){
+		$(".cancelBackBtn").click(function(){
 			history.back();
 		});
-	})
+	});
 </script>
 
 </head>
 <body>
-	<div class="container">
-		<h1>게시판 글수정 Form</h1>
+<div class="container">
+		<h1>공지사항 글수정 Form</h1>
 		<form action="update.do" method="post">
-		<input name="page" type="hidden" value="${param.page }" />
-  		<input name="perPageNum" type="hidden" value="${param.perPageNum }" />
+		<input name="perPageNum" type="hidden" value="${param.perPageNum }">
+		<input name="perPageNum" type="hidden" value="${param.perPageNum }" />
   		<input name="key" type="hidden" value="${param.key}" />
   		<input name="word" type="hidden" value="${param.word }" />
-			<div class="form-group">
-				<label for="no">번호:</label>
-				<input name="no" type="text" class="form-control" id="no"
-				value="${vo.no }" readonly="readonly">
-			</div>
 			<div class="form-group">
 				<label for="title">제목:</label>
 				<!-- required : 필수 입력, placeholder : 입력의 초기 안내,
@@ -52,18 +44,14 @@
 				placeholder="내용은 4자이상 700자 이하 입력" id="content">${vo.content }</textarea>
 			</div>
 			<div class="form-group">
-				<label for="writer">작성자:</label> <input name="writer" type="text"
-					class="form-control" id="writer"
-					required="required" pattern="[A-Za-z가-힣][0-9A-Za-z가-힣]{1,9}"
-					placeholder="이름은 2자부터 10자까지 입력" 
-					title="이름은 2자부터 10자까지 입력, 첫글자는 숫자가 올수 없습니다."
-					value="${vo.writer }">
+				<label for="startDate">공지시작일:</label> 
+				<input name="startDate" type="date" class="form-control" id="startDate" 
+				value="${vo.startDate }">
 			</div>
 			<div class="form-group">
-				<label for="pw">비밀번호:본인 확인용</label> 
-				<input name="pw" type="password" class="form-control" id="pw"
-					pattern="[^가-힣ㄱ-ㅎㅏ-]{4,20}" required="required"
-					title="비밀번호는 4-20자까지 입력, 한글은 입력할 수 없습니다.">
+				<label for="endDate">공지종료일:</label> 
+				<input name="endDate" type="date" class="form-control" id="endDate" 
+				value="${vo.endDate }">
 			</div>
 
 			<button class="btn btn-default">수정</button>

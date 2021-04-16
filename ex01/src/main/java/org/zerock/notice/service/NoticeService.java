@@ -4,10 +4,12 @@ import java.util.List;
 
 import org.zerock.notice.vo.NoticeVO;
 
+import com.webjjang.util.PageObject;
+
 public interface NoticeService {
 	
 	// 1. 공지 리스트
-	public List<NoticeVO> list() throws Exception;
+	public List<NoticeVO> list(PageObject pageObject) throws Exception;
 	
 	// 2. 공지 글보기
 	public NoticeVO view(Long no) throws Exception;

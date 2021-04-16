@@ -1,15 +1,20 @@
 package org.zerock.board.controller;
 
+import java.net.URLEncoder;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.zerock.board.service.BoardService;
 import org.zerock.board.vo.BoardVO;
+
+import com.webjjang.util.PageObject;
 
 import lombok.extern.log4j.Log4j;
 
@@ -29,9 +34,10 @@ public class BoardController {
 	
 	// 1. 게시판 리스트 - 검색 / list.do - get
 	@GetMapping("/list.do")
-	public String list(Model model) throws Exception {
-		log.info("list() ...... " );
-		model.addAttribute("list", service.list());
+	// @ModelAttribute - 전달 받은 변수의 값을 model에 담아서 JSP까지 보내준다. 변수 이름으로 사용
+	public String list(Model model, @ModelAttribute PageObject pageObject) throws Exception {
+		log.info("list().pageObject ...... " + pageObject );
+		model.addAttribute("list", service.list(pageObject));
 		return MODULE + "/list";
 	}
 	
@@ -40,7 +46,7 @@ public class BoardController {
 	// Model 객체 - 처리된 데이터를 JSP에 전달
 	// no, inc - 숫자 타입 : 원래는 String으로 데이터 전달. 없으면 null이 된다.
 	// null을 숫자로 변환하는 과정에서 오류가 난다.
-	public String view(Model model, Long no, int inc) throws Exception {
+	public String view(Model model, Long no, int inc, @ModelAttribute PageObject pageObject) throws Exception {
 		
 		log.info("view().no : "+ no +" - 게시판 글보기 --------------");
 		
@@ -57,7 +63,7 @@ public class BoardController {
 	
 	// 3-1. 게시판 등록 처리 / write.do - post
 	@PostMapping("/write.do")
-	public String write(BoardVO vo, RedirectAttributes rttr) throws Exception {
+	public String write(BoardVO vo, int perPageNum, RedirectAttributes rttr) throws Exception {
 		log.info("write().vo : " + vo);
 		
 		// DB에 데이터 저장하기
@@ -65,7 +71,7 @@ public class BoardController {
 		
 		rttr.addFlashAttribute("msg", "게시판 글등록이 성공적으로 되었습니다.");
 		
-		return "redirect:list.do";
+		return "redirect:list.do?perPageNum=" + perPageNum;
 	}
 	
 	// 4. 게시판 글수정 폼 / update.do - get
@@ -83,7 +89,7 @@ public class BoardController {
 	
 	// 4-1. 게시판 글수정 처리 / update.do - post
 	@PostMapping("/update.do")
-	public String update(BoardVO vo, RedirectAttributes rttr) throws Exception {
+	public String update(BoardVO vo, RedirectAttributes rttr, PageObject pageObject) throws Exception {
 		
 		log.info("update().vo : " + vo);
 		
@@ -95,12 +101,18 @@ public class BoardController {
 		
 		rttr.addFlashAttribute("msg", "게시판 글수정이 성공적으로 되었습니다.");
 		
-		return "redirect:view.do?no=" + vo.getNo() +"&inc=0";
+		return "redirect:view.do?no=" + vo.getNo() + "&inc=0"
+			+ "&page=" + pageObject.getPage() 
+			+ "&perPageNum=" + pageObject.getPerPageNum()
+			+ "&key=" + pageObject.getKey()
+			// url로 요청되는 경우 서버의 한글이 적용되므로 utf-8로 encode 시켜서 보낸다.
+			+ "&word=" + URLEncoder.encode(pageObject.getWord(), "utf-8")
+			;
 	}
 	
 	// 5. 게시판 글삭제 / delete.do - get
 	@PostMapping("/delete.do")
-	public String delete(BoardVO vo, RedirectAttributes rttr) throws Exception {
+	public String delete(BoardVO vo, int perPageNum, RedirectAttributes rttr) throws Exception {
 		
 		log.info("delete().vo : " + vo);
 		
@@ -110,7 +122,7 @@ public class BoardController {
 		
 		rttr.addFlashAttribute("msg", "게시판 글삭제가 성공적으로 되었습니다.");
 		
-		return "redirect:list.do";
+		return "redirect:list.do?perPageNum=" + perPageNum;
 	}
 
 }

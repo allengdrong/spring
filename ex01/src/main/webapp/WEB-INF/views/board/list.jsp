@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="pageObject" tagdir="/WEB-INF/tags" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -28,7 +29,9 @@ $(function() {
 	
 	$(".dataRow").click(function(){
 		var no = $(this).find(".no").text();
-		location = "view.do?no=" + no + "&inc=1";
+		var query = ${(empty pageObject)?"''":"'&page=" += pageObject.page += "&perPageNum=" += pageObject.perPageNum += "'"};
+		query += ${(empty pageObject.word)?"''":"'&key=" += pageObject.key += "&word=" += pageObject.word += "'"};
+		location = "view.do?no=" + no + "&inc=1" + query;
 	});
 });
 </script>
@@ -36,7 +39,33 @@ $(function() {
 </head>
 <body>
 <div class="container">
-	<h1>게시판 리스트</h1>
+	<h1 class="row">
+	<a href="list.do">게시판 리스트</a>
+</h1>
+	<form>
+	<input name="page" value="${pageObject.page }" type="hidden" />
+	<input name="perPageNum" value="${pageObject.perPageNum }" type="hidden" />
+	  <div class="input-group">
+	  <span class="input-group-addon">
+	  	<select name="key">
+	  		<option value="t" ${(pageObject.key == "t")?"selected":"" }>제목</option>
+	  		<option value="c" ${(pageObject.key == "c")?"selected":"" }>내용</option>
+	  		<option value="w" ${(pageObject.key == "w")?"selected":"" }>작성자</option>
+	  		<option value="tc" ${(pageObject.key == "tc")?"selected":"" }>제목+내용</option>
+	  		<option value="tw" ${(pageObject.key == "tw")?"selected":"" }>제목+작성자</option>
+	  		<option value="cw" ${(pageObject.key == "cw")?"selected":"" }>내용+작성자</option>
+	  		<option value="tcw" ${(pageObject.key == "tcw")?"selected":"" }>모두</option>
+	  	</select>
+	  </span>
+	    <input type="text" class="form-control" placeholder="Search"
+	    name="word" value="${pageObject.word }">
+	    <div class="input-group-btn">
+	      <button class="btn btn-default" type="submit">
+	        <i class="glyphicon glyphicon-search"></i>
+	      </button>
+	    </div>
+	  </div>
+	</form>
 	<ul class="list-group">
 		<c:if test="${empty list }">
 			<li class="list-group-item">
@@ -57,9 +86,12 @@ $(function() {
 			</c:forEach>
 		</c:if>
 	</ul>
-	<!-- a tag, js : location, 주소 입력 : get 방식으로 넘어 간다. 
-	post방식 꼭 지정을 해야 한다. -->
-	<a href = "write.do" class="btn btn-default">글쓰기</a>
+	<!-- a tag, js : location, 주소 입력 : get 방식으로 넘어 간다. post방식 꼭 지정을 해야 한다. -->
+	<a href = "write.do?perPageNum=${pageObject.perPageNum }" class="btn btn-default">글쓰기</a>
+	<div>
+		<pageObject:pageNav listURI="list.do" pageObject="${pageObject }" 
+		query="&key=${pageObject.key }&word=${pageObject.word }"/>
+	</div>
 </div>
 </body>
 </html>

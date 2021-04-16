@@ -4,13 +4,15 @@ import java.util.List;
 
 import org.zerock.board.vo.BoardVO;
 
+import com.webjjang.util.PageObject;
+
 public interface BoardMapper {
 	
 	// 1. 게시판 리스트
-	public List<BoardVO> list();
+	public List<BoardVO> list(PageObject pageObject);
 	
 	// 1-1. 게시판 리스트의 페이지 처리를 위한 전체 데이터 갯수
-	public Long getTotalRow();
+	public Long getTotalRow(PageObject pageObject);
 	
 	// 2. 게시판 글보기
 	public BoardVO view(Long no);
