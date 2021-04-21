@@ -36,7 +36,9 @@ public class ReplyController {
 	private ReplyService service;
 	
 	// 1. 게시판 댓글 리스트 - 검색 / list.do - get
-	@GetMapping(value = "/list.do", produces = {MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_UTF8_VALUE})
+	@GetMapping(value = "/list.do", produces = {
+												MediaType.APPLICATION_XML_VALUE, 
+												MediaType.APPLICATION_JSON_UTF8_VALUE})
 	// ResponseEntity : 실행 상태 코드와 함께 실행결과를 클라이언트에서 전달할때 사용하는 객체
 	public ResponseEntity<List<ReplyVO>> list(
 			@RequestParam(defaultValue = "1") long repPage, 
