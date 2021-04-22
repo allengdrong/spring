@@ -9,10 +9,14 @@
 
 <!-- bootstrap 라이브러리 등록 CDN방식 : sitemesh에서 decorator.jsp에서 한꺼번에 해결 -->
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 <!-- util JS 포함 -->
 <script type="text/javascript" src="/js/util.js"></script>
@@ -28,6 +32,10 @@
 ul.chat {
 	list-style: none;
 }
+
+ul.chat > li{
+	margin-bottom: 15px;
+}
 </style>
 
 <script type="text/javascript">
@@ -36,6 +44,7 @@ ul.chat {
 $(function(){
 	${(empty msg)?"":"alert('"+= msg +="');"}
 	// F5, ctrl + F5, ctrl + r 새로고침 막기
+	/*
 	$(document).keydown(function (e) {
 	     
 	            if (e.which === 116) {
@@ -47,7 +56,7 @@ $(function(){
 	                return false;
 	            }
 	}); 
-	
+	*/
 	// 모달 안에 삭제 버튼 이벤트
 	$("#modal_deleteBtn").click(function(){
 		$("#modal_form").submit();
@@ -96,6 +105,10 @@ $(function(){
 							+ "</small>";
 					str += "</div>";
 					str += "<p><pre style='background:none;'>" + list[i].content + "</pre></p>";
+					str += "<div class='text-right'>";
+					str += "<button class='btn btn-default btn-xs replyUpdateBtn'>수정</button>";
+					str += "<button class='btn btn-default btn-xs replyDeleteBtn'>삭제</button>";
+					str += "</div>";
 					str += "</div>";
 					str += "</li>";
 					}
@@ -103,7 +116,66 @@ $(function(){
 				replyUL.html(str);
 			}
 		);
-	}
+	} // showList()의 끝
+	
+	// 댓글 모달창의 전역 변수
+	var replyModal = $("#replyModal");
+	
+	// 댓글 등록 버튼 이벤트 처리 : 댓글의 모달창 정보 조정과 보이기 --------------------------------
+	$("#writeReplyBtn").click(function(){
+		// alert("댓글등록");
+		
+		// 댓글 모달 창의 제목 바꾸기
+		$("#replyModalTitle").text("Reply Write");
+		
+		// reply > Form input 데이터 지우기 : input 중에서 id="replyNo"는 제외시킨다. not
+		replyModal.find("input, textarea").not("#replyNo").val("");
+		
+		// replyModal에 있는 입력 항목을 다 보이게
+		replyModal.find("div.form-control").show();
+		// rno는 사용하지 않기 때문에 보이지 않게 한다.
+		replyModal.find("#replyRnoDiv").hide();
+		// replyModal.find("#replyNoDiv").hide();
+		
+		replyModal.modal("show");
+	});
+	
+	// 댓글 모달창의 등록 버튼에 대한 이벤트 처리 - 입력된 데이터를 가져와서 JSON 데이터 만들기 - 서버에 전송
+	$("#replyModalWriteBtn").click(function(){
+		var reply = {};
+		reply.no = $("#replyNo").val();
+		reply.content = $("#replyContent").val();
+		reply.writer = $("#replyWriter").val();
+		reply.pw = $("#replyPw").val();
+		reply.perPageNum = repPerPageNum;
+	// alert(reply);
+	// alert(JSON.stringify(reply));
+		
+		// ajax를 이용한 댓글 등록 처리
+		replyService.write(reply,
+				// 성공했을때의 처리 함수
+				function(result){
+					alert(result);
+					replyModal.modal("hide");
+					showList();
+			}
+		);	
+	});
+	
+	// 댓글 수정 폼 : 모달 (replyModal )----------------------------------
+	$(".chat").on("click", ".replyUpdateBtn",function(){
+		// alert("댓글 수정");
+		replyModal.modal("show");
+	});
+	
+	// 댓글 삭제 폼 : 모달 (replyModal )----------------------------------
+	$(".chat").on("click", ".replyDeleteBtn", function(){
+		// alert("댓글 삭제");
+		replyModal.modal("show");
+	});
+	
+	
+	
 });
 
 </script>
@@ -158,6 +230,8 @@ $(function(){
 				<div class="panel panel-default">
 					<div class="panel-heading">
 						<i class="fa fa-comments fa-fw"></i> 댓글
+						<button class="btn btn-primary btn-xs pull-right"
+							id="writeReplyBtn">댓글 쓰기</button>
 					</div>
 					<div class="panel-body">
 						<ul class="chat">
@@ -170,6 +244,10 @@ $(function(){
 											class="pull-right text-muted">2021.04.21 14:21</small>
 									</div>
 									<p>Good job!</p>
+									<div class="text-right">
+										<button class="btn btn-default btn-xs replyUpdateBtn">수정</button>
+										<button class="btn btn-default btn-xs replyDeleteBtn">삭제</button>
+									</div>
 								</div>
 							</li>
 						</ul>
@@ -178,6 +256,9 @@ $(function(){
 			</div>
 		</div>
 		<!-- 댓글의 끝 -->
+		
+		</div>
+		<!-- container 끝 -->
 
 		<!-- Modal - 게시판 글 삭제시 사용되는 모달 창 -->
 		<div id="myModal" class="modal fade" role="dialog">
@@ -210,7 +291,56 @@ $(function(){
 			</div>
 		</div>
 		<!-- Modal - 게시판 글 삭제시 사용되는 모달 창의 끝 -->
-	</div>
-	<!-- container의 끝 -->
+
+		<!-- Modal - 댓글 쓰기 / 수정 시 사용되는 모달 창 -->
+		<div id="replyModal" class="modal fade" role="dialog">
+			<div class="modal-dialog">
+
+				<!-- Modal content-->
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+						<h4 class="modal-title">
+							<i class="fa fa-comments fa-fw"></i>
+								<span id="replyModalTitle">Reply Modal</span></h4>
+					</div>
+					<div class="modal-body">
+						<form>
+							<div class="form-group" id="replyRnoDiv">
+								<label for="replyRno">댓글번호:</label> 
+								<input name="rno"type="text" class="form-control" id="replyRno"
+								readonly="readonly">
+							</div>
+							<div class="form-group" id="replyNoDiv">
+								<label for="replyNo">게시판 번호:</label> 
+								<input name="no"type="text" class="form-control" id="replyNo"
+								readonly="readonly" value="${vo. no }">
+							</div>
+							<div class="form-group" id="replyContentDiv">
+								<label for="replyContent">내용:</label>
+								<textarea name="content" class="form-control" rows="3" id="replyContent"
+								required="required"></textarea>
+							</div>
+							<div class="form-group" id="replyWriterDiv">
+								<label for="replyWriter">작성자:</label> 
+								<input name="writer"type="text" class="form-control" id="replyWriter"
+								required="required" pattern="[A-Za-z까-힣][A-Za-z까-힣0-9]{1,9}">
+							</div>
+							<div class="form-group" id="replyPwDiv">
+								<label for="replyPW">비밀번호:</label> 
+								<input name="pw"type="text" class="form-control" id="replyPw"
+								required="required" pattern=".{4,20}">
+							</div>
+						</form>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" id="replyModalWriteBtn">등록</button>
+						<button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
+					</div>
+				</div>
+
+			</div>
+		</div>
+		<!-- Modal - 댓글 쓰기 / 수정 시 사용되는 모달 창의 끝 -->
 </body>
 </html>

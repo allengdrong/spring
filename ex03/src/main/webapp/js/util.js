@@ -16,7 +16,13 @@
 }
 
 // 날짜객체를 시간문자열로 표시하는 함수 - dateToTimeStr(date, sep) - yyyy.mm.dd
+// java 코드에서 java.util.Date 객체를 사용하여야 한다.
+// java 코드에서 java.sql.Date 객체 사용하게 되면 날짜만 처리하게 된다. 시간이 없어진다.
  function dateToTimeStr(date){
+ 
+ 	// 날짜를 찍어서 확인해서 숫자는 나오는데 ~~~ 000 시간 정보가 포함되어 있지 않다.
+ 	// oracle DB - select to_char(writeDate, 'hh:mi:ss') from board_reply 확인해 본다.
+ 	// java 코드 확인 return service.list(); -> list = service.list(); sys(list); return list;
 	
 	// 반드시 date - date 객체이여만 한다.
 	var hh = date.getHours();

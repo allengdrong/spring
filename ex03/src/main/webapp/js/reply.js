@@ -23,7 +23,7 @@ var replyService = (
 			// Ajax 함수 : $.getJSON() - $.ajax()를 통해서 JSON 데이터를 받아오게 만든 함수
 			$.getJSON(
 				// ajax로 호출하는 url
-				"/replies/list.do?no=" + no,
+				"/replies/list.do?no=" + no + "&repPage=" + page + "&repPerPageNum" + perPageNum,
 				// success(성공) 상태일 때 처리되는 함수
 				// 데이터 처리가 성공해서 데이터를 가져오면 data로 넣어준다. list이므로 배열이 넘어온다.
 				function(data) {
@@ -38,24 +38,72 @@ var replyService = (
 				// error(실패) 상태일 때의 처리 함수
 				.fail(
 					function(xhr, status, err) {
-					// 오류 함수가 있으면 오류 함수 실행	
-					if(error){
-						error();
-					}else{
-						// 오류 출력
-						alert(err);
+						// 오류 함수가 있으면 오류 함수 실행	
+						if (error) {
+							error();
+						} else {
+							// 오류 출력
+							alert(err);
+						}
 					}
-				}
-			); // $.getJSON().fail()의 끝
+				); // $.getJSON().fail()의 끝
 		} // list() 의 끝
+
+		//write() 교재 add() ---------------------------
+		function write(reply, callback, error) {
+			console.log("reply write() ----------------------");
+			console.log("reply data : " + JSON.stringify(reply));
+			// ajax를 이용해서 데이터를 서버에 보낸다.
+			$.ajax({
+				// 전송 방법의 타입 : get, post, put, patch, delete, update
+				type: "post",
+				// 요청 URL 
+				url: "/replies/write.do",
+				// 전송되는 데이터
+				
+				
+				data: JSON.stringify(reply),
+				// data: JSON.stringify(reply),
+				// 전송되는 데이터의 타입과 인코딩방식
+				contentType: "application/json; charset=utf-8",
+				// 정상적으로 댓글 쓰기 성공했을 때의 처리 함수
+				success: function(result, status, xhr) {
+					if (callback) callback(result);
+					else alert("댓글 쓰기 성공");
+				},
+				// 처리 도중 오류(실패)가 난 경우 처리하는 함수 속성
+				error : function(xht, status, err){
+					if(error) error(err);
+					else alert("댓글 쓰기 중 오류 발생");
+				}
+			}); // $.ajax의 끝
+		}
+
+		// update() : ---------------------------------
+		function update(reply, callback, error) {
+			console.log("reply update() ----------------------")
+
+		}
+
+		// delete() : delete가 예약어 이므로 변수나 함수로 사용 불가 -> deleteReply() ---------------------------------
+		function deleteReply(reply, callback, error) {
+			console.log("reply deleteReply() ----------------------")
+
+		}
+
 		return {
 			// replyService.list(param,callback,error)
-			list : list,
-			displayTime : displayTime
+			list: list,
+			write: write,
+			update: update,
+			delete: deleteReply,
+
+			// util.js 파일에서 displayTime 함수를 찾는다. 앞에 있어야 한다.
+			displayTime: displayTime
 		}
 
 	}
-	
+
 )();
 console.log(replyService);
  // alert(replyService);
