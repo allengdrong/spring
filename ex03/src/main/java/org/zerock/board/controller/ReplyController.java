@@ -76,41 +76,52 @@ public class ReplyController {
 	// 4. 게시판 글수정 폼 / /board/view.do 포함
 	
 	// 4-1. 게시판 글수정 처리 / update.do - patch
-	@PatchMapping("/update.do")
-	public String update(ReplyVO vo, RedirectAttributes rttr, PageObject pageObject) throws Exception {
+	@PatchMapping(value = "/update.do",
+			consumes = {MediaType.APPLICATION_JSON_UTF8_VALUE},
+			produces = {"application/text; charset=utf-8"})
+	public ResponseEntity<String> update(@RequestBody ReplyVO vo) throws Exception {
 		
 		log.info("update().vo : " + vo);
 		
 		int result = service.update(vo);
 		
-		if(result == 0) throw new Exception("게시판 수정 실패 - 정보를 확인해 주세요");
+		// 전달되는 데이터의 선언
+		String msg = "댓글 수정이 성공적으로 되었습니다.";
+		HttpStatus status = HttpStatus.OK;
 		
-		log.info("update().result : " + result);
+		if(result == 0) {
+			msg = "댓글 수정 실패 - 정보를 확인해 주세요";
+			status = HttpStatus.NOT_MODIFIED;
+		}
 		
-		rttr.addFlashAttribute("msg", "게시판 글수정이 성공적으로 되었습니다.");
+		log.info("update().msg : " + msg);
 		
-		return "redirect:view.do?no=" + vo.getNo() + "&inc=0"
-			+ "&page=" + pageObject.getPage() 
-			+ "&perPageNum=" + pageObject.getPerPageNum()
-			+ "&key=" + pageObject.getKey()
-			// url로 요청되는 경우 서버의 한글이 적용되므로 utf-8로 encode 시켜서 보낸다.
-			+ "&word=" + URLEncoder.encode(pageObject.getWord(), "utf-8")
-			;
+		return new ResponseEntity<String>(msg, status);
 	}
 	
 	// 5. 게시판 글삭제 / delete.do - delete 방식
-	@DeleteMapping("/delete.do")
-	public String delete(ReplyVO vo, int perPageNum, RedirectAttributes rttr) throws Exception {
+	@DeleteMapping(value = "/delete.do",
+			consumes = {MediaType.APPLICATION_JSON_UTF8_VALUE},
+			produces = {"application/text; charset=utf-8"})
+	public ResponseEntity<String> delete(@RequestBody ReplyVO vo) 
+			throws Exception {
 		
 		log.info("delete().vo : " + vo);
 		
 		int result = service.delete(vo);
-		// result 가 0이면 비밀번호가 틀림.
-		if(result == 0) throw new Exception("게시판 삭제 실패 - 정보를 확인해 주세요.");
 		
-		rttr.addFlashAttribute("msg", "게시판 글삭제가 성공적으로 되었습니다.");
-		
-		return "redirect:list.do?perPageNum=" + perPageNum;
+		// 전달되는 데이터의 선언
+			String msg = "댓글 삭제가 성공적으로 되었습니다.";
+			HttpStatus status = HttpStatus.OK;
+			
+			if(result == 0) {
+				msg = "댓글 삭제 실패 - 정보를 확인해 주세요";
+				status = HttpStatus.NOT_MODIFIED;
+			}
+			
+			log.info("delete().msg : " + msg);
+			
+			return new ResponseEntity<String>(msg, status);
 	}
 
 }

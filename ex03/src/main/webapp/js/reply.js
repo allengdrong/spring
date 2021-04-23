@@ -80,14 +80,44 @@ var replyService = (
 		}
 
 		// update() : ---------------------------------
+		// update(JSON data, 성공함수, 실패함수)
 		function update(reply, callback, error) {
-			console.log("reply update() ----------------------")
-
+			console.log("reply update() ----------------------");
+			// ajax를 이용해서 데이터 넘기기
+			$.ajax({
+				type:"patch",
+				url : "/replies/update.do",
+				data : JSON.stringify(reply),
+				contentType : "application/json; charset=utf-8",
+				success : function(result, status, xhr){
+					if(callback) callback(result, status);
+					else alert("수정 성공 - 새로고침하세요.");
+				},
+				error : function(xhr, status, err){
+					if(error) error(err);
+					else alert(err);
+				}
+			});
 		}
 
 		// delete() : delete가 예약어 이므로 변수나 함수로 사용 불가 -> deleteReply() ---------------------------------
 		function deleteReply(reply, callback, error) {
-			console.log("reply deleteReply() ----------------------")
+			console.log("reply deleteReply() ----------------------");
+			
+			$.ajax({
+				type:"delete",
+				url : "/replies/delete.do",
+				data : JSON.stringify(reply),
+				contentType : "application/json; charset=utf-8",
+				success : function(result, status, xhr){
+					if(callback) callback(result, status);
+					else alert("댓글 삭제 완료 - 새로고침 하세요.");
+				},
+				error : function(xhr, status, err){
+					if(error) error(err);
+					else alert(err);
+				}
+			});
 
 		}
 

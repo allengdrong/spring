@@ -42,7 +42,7 @@
 	
 	<!-- 5. 게시판 댓글삭제 -->
 	<delete id="delete">
-		delete from board
+		delete from board_reply
 		where rno = #{rno} and pw = #{pw}
 	</delete>
 </mapper>

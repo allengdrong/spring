@@ -9,14 +9,10 @@
 
 <!-- bootstrap 라이브러리 등록 CDN방식 : sitemesh에서 decorator.jsp에서 한꺼번에 해결 -->
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-<link rel="stylesheet"
-	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 <!-- util JS 포함 -->
 <script type="text/javascript" src="/js/util.js"></script>
@@ -99,12 +95,12 @@ $(function(){
 					str += "<li class='left clearfix' data-rno='"+ list[i].rno +"'>";
 					str += "<div>";
 					str += "<div class='header'>";
-					str += "<strong class='primary-font'>" + list[i].writer + "</strong>";
+					str += "<strong class='primary-font replyWriterData'>" + list[i].writer + "</strong>";
 					str += "<small class='pull-right text-muted'>" 
 							+ replyService.displayTime(list[i].writeDate)
 							+ "</small>";
 					str += "</div>";
-					str += "<p><pre style='background:none;'>" + list[i].content + "</pre></p>";
+					str += "<p><pre style='background:none;' class='replyContentData'>" + list[i].content + "</pre></p>";
 					str += "<div class='text-right'>";
 					str += "<button class='btn btn-default btn-xs replyUpdateBtn'>수정</button>";
 					str += "<button class='btn btn-default btn-xs replyDeleteBtn'>삭제</button>";
@@ -128,14 +124,18 @@ $(function(){
 		// 댓글 모달 창의 제목 바꾸기
 		$("#replyModalTitle").text("Reply Write");
 		
+		// 작업할 데이터의 입력란을 보이게 안보이게
+		$("#replyModal .form-group").show();
+		$("#replyRnoDiv").hide();
+		
+		// 작업할 버튼을 보이게 안보이게
+		var footer = $("#replyModal .modal-footer");
+		footer.find("button").show();
+		footer.find("#replyModalUpdateBtn, #replyModalDeleteBtn").hide();
+		
+		
 		// reply > Form input 데이터 지우기 : input 중에서 id="replyNo"는 제외시킨다. not
 		replyModal.find("input, textarea").not("#replyNo").val("");
-		
-		// replyModal에 있는 입력 항목을 다 보이게
-		replyModal.find("div.form-control").show();
-		// rno는 사용하지 않기 때문에 보이지 않게 한다.
-		replyModal.find("#replyRnoDiv").hide();
-		// replyModal.find("#replyNoDiv").hide();
 		
 		replyModal.modal("show");
 	});
@@ -147,7 +147,7 @@ $(function(){
 		reply.content = $("#replyContent").val();
 		reply.writer = $("#replyWriter").val();
 		reply.pw = $("#replyPw").val();
-		reply.perPageNum = repPerPageNum;
+		// reply.perPageNum = repPerPageNum;
 	// alert(reply);
 	// alert(JSON.stringify(reply));
 		
@@ -165,16 +165,137 @@ $(function(){
 	// 댓글 수정 폼 : 모달 (replyModal )----------------------------------
 	$(".chat").on("click", ".replyUpdateBtn",function(){
 		// alert("댓글 수정");
+		// 모달창 제목 바꾸기
+		$("#replyModalTitle").text("Reply Update");
+		
+		// 작업할 데이터의 입력란을 보이게 안보이게
+		$("#replyModal .form-group").show();
+		$("#replyNoDiv").hide();
+		
+		// 작업할 버튼을 보이게 안보이게
+		var footer = $("#replyModal .modal-footer");
+		footer.find("button").show();
+		footer.find("#replyModalWriteBtn, #replyModalDeleteBtn").hide();
+		
+		// 데이터 수집
+		// 전체 데이터를 포함하고 있는 태그 : li
+		var li = $(this).closest("li");
+		
+		// html tag 안에 속성으로 data-rno="2" 값을 넣어 둔것은 obj.data("rno")로 찾아서 쓴다.
+		var rno = li.data("rno");
+		var content = li.find(".replyContentData").text();
+		var writer = li.find(".replyWriterData").text();
+		
+		
+		// 데이터 셋팅
+		$("#replyRno").val(rno);
+		$("#replyContent").val(content);
+		$("#replyWriter").val(writer);
+		// 비밀번호는 지운다.
+		$("#replyPw").val("");
+		
 		replyModal.modal("show");
 	});
+	
+	// 모달창 수정 버튼 이벤트 - 수정 처리 ------------------------------------
+	$("#replyModalUpdateBtn").click(function(){
+		// alert("수정처리");
+		// 데이터 수집
+		var reply = {};
+		reply.rno = $("#replyRno").val();
+		reply.content = $("#replyContent").val();
+		reply.writer = $("#replyWriter").val();
+		reply.pw = $("#replyPw").val();
+		
+		// 수집한 데이터 확인
+		// alert(JSON.stringify(reply));
+		
+		// reply.js 안에 있는 replyService.update를 호출해서 실행
+		replyService.update(reply,
+			function(result, status){
+				//	alert("성공" + status);
+					
+				// 성공 메시지 출력
+				if(status=="notmodified")
+					alert("수정이 되지 않았습니다. 정보를 확인해 주세요.");
+				else{
+					alert(result);
+						
+					showList();
+				}
+				// 리스트를 다시 표시한다.
+			},
+			function(err, status){
+					// 실패 메시지 출력
+					// alert(err, status);
+					alert(err);
+				}
+			); // replyService.update()의 끝 
+			
+			// 모달 창은 숨겨 둔다.
+			replyModal.modal("hide");
+	
+		});
 	
 	// 댓글 삭제 폼 : 모달 (replyModal )----------------------------------
 	$(".chat").on("click", ".replyDeleteBtn", function(){
 		// alert("댓글 삭제");
+		// 모달창 제목 바꾸기
+		$("#replyModalTitle").text("Reply Delete");
+		
+		// 작업할 데이터의 입력란을 보이게 안보이게
+		$("#replyModal .form-group").show();
+		$("#replyNoDiv, #replyContentDiv, #replyWriterDiv").hide();
+		
+		// 작업할 버튼을 보이게 안보이게
+		var footer = $("#replyModal .modal-footer");
+		footer.find("button").show();
+		footer.find("#replyModalWriteBtn, #replyModalUpdateBtn").hide();
+		
+		// 댓글 번호 가져오기
+		var li = $(this).closest("li");
+		var rno = li.data("rno");
+		
+		// 댓글 번호 셋팅
+		$("#replyRno").val(rno);
+		
+		// 댓글 비밀번호 지우기
+		$("#replyPw").val("");
+		
+		// 댓글 모달 보이게
 		replyModal.modal("show");
+		
 	});
 	
-	
+	// 댓글 삭제 처리
+	$("#replyModalDeleteBtn").click(function(){
+		// alert("댓글 삭제 처리");
+		// 데이터 수집
+		var reply= {};
+		reply.rno = $("#replyRno").val();
+		reply.pw = $("#replyPw").val();
+		
+		// reply.js 안에 있는 replyService.delete(reply JSON, 성공함수, 오류함수)
+		replyService.delete(reply,
+				function(result, status){
+					// status - 비밀번호가 틀려서 삭제가 되지 않으면 "notmodified"
+					// alert("result : " + result + "\nstatus : " + status);
+					if(status=="success"){
+						alert(result);
+						// 성공적으로 삭제를 한 경우는 다시 리스트를 가져와서 표시해준다.
+						showList();
+					}else{
+						alert("댓글 삭제에 실패하였습니다. 정보를 확인해주세요.");
+					}
+				},
+				function(err){
+					alert(err);
+				}
+		);
+		
+		replyModal.modal("hide");
+		
+	});
 	
 });
 
@@ -329,12 +450,14 @@ $(function(){
 							<div class="form-group" id="replyPwDiv">
 								<label for="replyPW">비밀번호:</label> 
 								<input name="pw"type="text" class="form-control" id="replyPw"
-								required="required" pattern=".{4,20}">
+								 pattern=".{4,20}">
 							</div>
 						</form>
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-default" id="replyModalWriteBtn">등록</button>
+						<button type="button" class="btn btn-default" id="replyModalUpdateBtn">수정</button>
+						<button type="button" class="btn btn-default" id="replyModalDeleteBtn">삭제</button>
 						<button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
 					</div>
 				</div>

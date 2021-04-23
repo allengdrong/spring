@@ -45,14 +45,14 @@ public class ReplyServiceImpl implements ReplyService {
 	public int update(ReplyVO vo) throws Exception {
 		// TODO Auto-generated method stub
 		log.info("update().vo : " + vo);
-		return mapper.write(vo);
+		return mapper.update(vo);
 	}
 	
 	@Override
 	public int delete(ReplyVO vo) throws Exception {
 		// TODO Auto-generated method stub
 		log.info("delete().vo : " + vo);
-		return mapper.write(vo);
+		return mapper.delete(vo);
 	}
 
 	@Override
