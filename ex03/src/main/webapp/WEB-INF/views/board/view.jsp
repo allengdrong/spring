@@ -14,6 +14,9 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
+<!-- Awesome 4 icons lib : class="fa~ -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
 <!-- util JS 포함 -->
 <script type="text/javascript" src="/js/util.js"></script>
 
@@ -74,12 +77,22 @@ $(function(){
 	
 	// function showList() - no, page, perPageNum : 전역변수로 선언되어 있으므로 변수명 사용
 	function showList(){
-	replyService.list(
+		// replyService 객체는 reply.js에서 선언하고 있다.
+		replyService.list(
 			// 서버에 넘겨줄 데이터
 			{no:no, repPage:repPage, repPerPageNum:repPerPageNum},
 			// 성공했을 때의 함수. data라는 이름으로 list가 들어온다.
-			function(list){
+			// function(list){
+			function(data){
 				// list 데이터 확인
+				// data 데이터 확인 -> JSON 데이터 : [object Object]
+				//   - data.list / data.pageObject
+				// 문자열로 만들어서 데이터 표시 - 눈으로 확인
+// 				alert(data);
+// 				alert(JSON.stringify(data));
+// 				return; // 데이터만 확인하고 처리는 하지 않도록 하기 위해서
+
+				var list = data.list;
 				// alert(list);
 				var str = "";
 				// li 태그 만들기----------------------------
@@ -109,8 +122,13 @@ $(function(){
 					str += "</li>";
 					}
 				}
-				replyUL.html(str);
-			}
+				replyUL.html(str);// 댓글 리스트 데이터를 표시
+				// 댓글의 페이지 네이션 표시.
+				var pageObject = data.pageObject; // 서버에서 넘어오는 데이터에서 pageObject를 꺼낸다.
+				var str = ajaxPage(pageObject);
+//					alert(str);
+				$("#reply_nav").html(str);
+			} // function(data) 의 끝
 		);
 	} // showList()의 끝
 	
@@ -296,9 +314,24 @@ $(function(){
 		replyModal.modal("hide");
 		
 	});
+	// 댓글의 페이지 번호 클릭 이벤트 - 태그가 나중에 나온다. 그래서 on()
+	// $(원래 있었던 객체 선택).on(이벤트, 새로 만들어진 태그, 실행함수) -> 이벤트의 전달
+	$("#reply_nav").on("click", ".reply_nav_li",
+		function(){
+// 			alert("댓글 페이지네이션 클릭");
+			// this => li / move 클래스 li-a에 작성해 놨다.
+			if($(this).find("a").hasClass("move")){
+				repPage = $(this).data("page");
+// 				alert(repPage + " 페이지로 이동시킨다.");
+				showList();
+			} else {
+				alert("이동시키지 않는다.");
+			}
+			return false;
+		}
+	);
 	
-});
-
+}); // $(function(){~}) 의 끝.
 </script>
 
 </head>
@@ -373,9 +406,17 @@ $(function(){
 							</li>
 						</ul>
 					</div>
-				</div>
+					<!-- 댓글 panel-body 의 끝 -->
+			<div class="panel-footer">
+				<ul class="pagination" id="reply_nav">
+				  <li><a href="">1</a></li>
+				  <li class="active"><a href="">2</a></li>
+				</ul>
 			</div>
 		</div>
+		<!-- 댓글 panel 의 끝 -->
+				</div>
+			</div>
 		<!-- 댓글의 끝 -->
 		
 		</div>

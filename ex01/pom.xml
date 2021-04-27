@@ -12,8 +12,8 @@
 		<junit-version>4.12</junit-version>
 		<java-version>1.8</java-version>
 		<org.springframework-version>5.0.7.RELEASE</org.springframework-version>
-		<org.aspectj-version>1.6.10</org.aspectj-version>
-		<org.slf4j-version>1.6.6</org.slf4j-version>
+		<org.aspectj-version>1.9.10</org.aspectj-version>
+		<org.slf4j-version>1.7.25</org.slf4j-version>
 		<!-- project 절대 위치를 property로 설정 -->
 		<project.basedir>C:\Users\EZEN\git\spring\ex01</project.basedir>
 	</properties>

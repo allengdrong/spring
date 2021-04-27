@@ -6,6 +6,8 @@
 <mapper namespace="org.zerock.board.mapper.ReplyMapper">
 	<!-- 1. 게시판 리스트 -->
 	<!-- id="method" -->
+	<!-- map-pageObject-startRow : pageObject.startRow -->
+	<!-- map-no : no -->
 	<select id="list" resultType="org.zerock.board.vo.ReplyVO">
 		select rnum, rno, no, content, writer, writeDate
 		from
@@ -24,6 +26,7 @@
 	<!-- 1-1. 게시판 전체 댓글의 갯수 -->
 	<select id="getTotalRow" resultType="java.lang.Long">
 		select count(*) from board_reply
+		where no = #{no}
 	</select>
 	
 	<!-- 2. 게시판 댓글보기 - 생략 : 리스트에 포함 -->
