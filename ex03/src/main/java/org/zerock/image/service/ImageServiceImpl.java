@@ -33,4 +33,22 @@ public class ImageServiceImpl implements ImageService{
 		return mapper.view(no);
 	}
 
+	@Override
+	public int write(ImageVO vo) throws Exception {
+		// TODO Auto-generated method stub
+		return mapper.write(vo);
+	}
+
+	@Override
+	public int updateFile(ImageVO vo) throws Exception {
+		// TODO Auto-generated method stub
+		return mapper.updateFile(vo);
+	}
+
+	@Override
+	public int update(ImageVO vo) throws Exception {
+		// TODO Auto-generated method stub
+		return mapper.update(vo);
+	}
+
 }

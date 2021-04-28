@@ -70,7 +70,7 @@ $(function(){
 			<td colspan="2">
 				<c:if test="${vo.id == login.id || login.gradeNo == 9}">
 					<!-- 작성자가 로그인한 회원인 경우와 관리자에게만 나타나는 메뉴 -->
-					<a href="update.do?no=${vo.no }" class="btn btn-default">수정(제목,내용)</a>
+					<a href="update.do?no=${vo.no }&page=${param.page }&perPageNum=${param.perPageNum}" class="btn btn-default">수정(제목,내용)</a>
 					<button type="button" class="btn btn-default"
 					 data-toggle="modal" data-target="#myModal">파일바꾸기</button>
 					<a href="delete.do?no=${vo.no }&perPageNum=${param.perPageNum}&deleteFile=${vo.fileName}" class="btn btn-default">삭제</a>
@@ -115,7 +115,7 @@ $(function(){
 
 
 	
-	  <!-- Modal -->
+	  <!-- Modal : 이미지 바꾸기 모달-->
   <div class="modal fade" id="myModal" role="dialog">
     <div class="modal-dialog">
     
@@ -144,7 +144,7 @@ $(function(){
           	</div>
           	<div class="form-group">
           		<label for="imageFile">바꿀 파일 선택</label>
-          		<input name="imageFile" id="imageFile" class="form-control"
+          		<input name="multipartFile" id="imageFile" class="form-control"
           		 type="file" />
           	</div>
           </form>

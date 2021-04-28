@@ -1,46 +1,91 @@
-<%@page import="com.webjjang.main.controller.Beans"%>
-<%@page import="com.webjjang.util.filter.AuthorityFilter"%>
-<%@page import="com.webjjang.main.controller.ExeService"%>
-<%@page import="com.webjjang.image.vo.ImageVO"%>
-<%@page import="com.webjjang.member.vo.LoginVO"%>
-<%@page import="com.oreilly.servlet.multipart.DefaultFileRenamePolicy"%>
-<%@page import="com.oreilly.servlet.MultipartRequest"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%
-// 자바
-// 저장 위치
-String path = "/upload/image/";
-String realPath = request.getServletContext().getRealPath(path);
-System.out.println("/image/write.jsp [realPath] - " + realPath);
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>이미지 등록</title>
 
-// fileSize : 용량 제한 - 10MByte
-int fileSize = 10 * 1024 * 1024; // 1000 -> 1K, 1000K -> 1M, 1000M -> 1G, 1000G -> 1T
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
-// 파일의 정보를 처리해 주는 객체 생성 -> 파일 업로드가 자동으로 이루어 진다.
-// new MultipartRequest(request, 실제적인 저장위치-컴에서, 파일용량제한, 엔코딩방식, 중복된파일이름처리객체);
-MultipartRequest multi = new MultipartRequest(request, realPath, fileSize,
-		"utf-8", new DefaultFileRenamePolicy());
-// MultipartRequest 생성 후 request에서는 아무것도 나오지 않는다. 
-// System.out.println("/image/write.jsp [request.title] - " + request.getParameter("title"));
-// System.out.println("/image/write.jsp [multi.title] - " + multi.getParameter("title"));
-String title = multi.getParameter("title");
-String content = multi.getParameter("content");
-String id = ((LoginVO) session.getAttribute("login")).getId();
-// 서버에 저장된 파일명
-String fileName = multi.getFilesystemName("imageFile");
-System.out.println("/image/write.jsp [fileName] - " + fileName);
 
-// VO 객체를 생성하고 저장한다.
-ImageVO vo = new ImageVO();
-vo.setTitle(title);
-vo.setContent(content);
-vo.setId(id);
-vo.setFileName(path + fileName);
+<script type="text/javascript">
+// 허용되는 이미지 파일 형식들
+var imageExt = ["JPG", "JPEG", "GIF", "PNG"];
 
-// DB 처리
-ExeService.execute(Beans.get(AuthorityFilter.url), vo);
+$(function(){
+	// 전달할 때의 데이터 찍기
+	$("#writeForm").submit(function(){
+		// alert("submit()");
+		// alert($("#title").val());
+		// alert($("#content").val());
+		// C:\fakepath\flower01.jpg
+		// alert($("#imageFile").val());
+		// 첨부파일이 이미지 파일인지 알아내는 프로그램 작성 -> 확장자 : 파일명의 마지막 "." 이후의 글자
+		var fileName = $("#imageFile").val();
+		// substring(시작[, 끝]) - 부분 문자열 잘라내기
+		// lastIndexOf(찾는 문자열) - 뒤에서 부터 찾는 문자열의 위치. 찾는 문자열이 없으면 -1이 된다.
+		// toUpperCase() -> 모든 영문자를 대문자로 만들어 준다. <--> toLowerCase()
+		var ext = fileName.substring(fileName.lastIndexOf(".")+1).toUpperCase();
+		// alert(ext);
+		
+		// 이미지 확장자인지 확인하는 반복문
+		var checkExt = false; // 지원하지 않는 확장자를 기본으로 셋팅
+		for(i = 0; i < imageExt.length; i++){
+			if(ext == imageExt[i]){
+				checkExt = true; // 지원하는 확장자로 바꾼다.
+				break;
+			}
+		}
+		// 지원하지 않는 이미지 파일 선택경의 처리
+		if(!checkExt){
+			alert("지원하지 않는 이미지 파일입니다.");
+			$("#imageFile").focus();
+			return false;
+		}
+		
+		// submit을 취소
+		// return false;
+	});
+	
+	// 취소 버튼을 클릭하면 이전 페이지로 이동
+	$("#cancelBtn").click(function(){
+		history.back();
+	});
+	
+});
+</script>
 
-// 리스트로 자동 이동시킨다.
-response.sendRedirect("list.jsp?page=1&perPageNum=" + multi.getParameter("perPageNum"));
-%>
+</head>
+<body>
+<div class="container">
+	<h1>이미지 등록</h1>
+	
+	
+	<!-- 파일첨부를 하는 입력에는 반드시 post방식이여야 하고 enctype 을 지정해야만 한다.
+	  input tag의 type="file"로 지정한다. -->
+	<form action="write.do" method="post" enctype="multipart/form-data" id="writeForm" >
+		<input name="perPageNum" value="${param.perPageNum }" type="hidden">
+		<div class="form-group">
+			<label for="title">제목</label>
+			<input name="title" id="title" class="form-control" />
+		</div>
+		<div class="form-group">
+			<label for="content">내용</label>
+			<textarea name="content" id="content" class="form-control" rows="5"
+			 ></textarea>
+		</div>
+		<div class="form-group">
+			<label for=""imageFile"">이미지 파일(JPG, JPEG, GIF, PNG - 이미지 지원)</label>
+			<input name="multipartFile" id="imageFile" type="file" class="form-control" />
+		</div>
+		<button class="btn btn-defualt">올리기</button>
+		<button type="reset" class="btn btn-defualt">새로입력</button>
+		<button type="button" id="cancelBtn" class="btn btn-defualt">취소</button>
+	</form>
+</div>
+</body>
+</html>

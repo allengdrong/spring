@@ -17,4 +17,13 @@ public interface ImageMapper {
 	// 2. 이미지 보기
 	public ImageVO view(Long no);
 	
+	// 3. 이미지 등록
+	public int write(ImageVO vo);
+	
+	// 4-1. 이미지 파일 수정
+	public int updateFile(ImageVO vo);
+
+	// 4-2. 이미지 정보 수정 - 제목, 내용
+	public int update(ImageVO vo);
+	
 }

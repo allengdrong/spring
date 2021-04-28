@@ -1,15 +1,18 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>이미지 등록</title>
+<title>이미지 정보 수정</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
 <script type="text/javascript">
-// 허용되는 이미지 파일 형식들
-var imageExt = ["JPG", "JPEG", "GIF", "PNG"];
-
 $(function(){
 	// 전달할 때의 데이터 찍기
 	$("#writeForm").submit(function(){
@@ -44,6 +47,10 @@ $(function(){
 		// submit을 취소
 		// return false;
 	});
+	
+	$("#cancelBtn").click(function(){
+		history.back;
+	});
 });
 </script>
 
@@ -51,24 +58,25 @@ $(function(){
 <body>
 <div class="container">
 	<h1>이미지 등록</h1>
-	<!-- 파일첨부를 하는 입력에는 반드시 post방식이여야 하고 enctype 을 지정해야만 한다.
-	  input tag의 type="file"로 지정한다. -->
-	<form action="write.jsp" method="post" enctype="multipart/form-data" id="writeForm" >
+	<!-- 파일첨부는 포함되지 않는다. endtype 지정 안해도 된다. -->
+	<form action="update.do" method="post" id="writeForm" >
+		<input name="page" value="${param.page }" type="hidden">
 		<input name="perPageNum" value="${param.perPageNum }" type="hidden">
 		<div class="form-group">
+			<label for="no">번호</label>
+			<input name="no" id="no" class="form-control" value="${vo.no }" 
+			readonly="readonly"/>
+		</div>
+		<div class="form-group">
 			<label for="title">제목</label>
-			<input name="title" id="title" class="form-control" />
+			<input name="title" id="title" class="form-control" value="${vo.title }" />
 		</div>
 		<div class="form-group">
 			<label for="content">내용</label>
 			<textarea name="content" id="content" class="form-control" rows="5"
-			 ></textarea>
+			 >${vo.content }</textarea>
 		</div>
-		<div class="form-group">
-			<label for="imageFile">이미지 파일(JPG, JPEG, GIF, PNG - 이미지 지원)</label>
-			<input name="imageFile" id="imageFile" type="file" class="form-control" />
-		</div>
-		<button class="btn btn-defualt">올리기</button>
+		<button class="btn btn-defualt">수정</button>
 		<button type="reset" class="btn btn-defualt">새로입력</button>
 		<button type="button" id="cancelBtn" class="btn btn-defualt">취소</button>
 	</form>

@@ -76,16 +76,22 @@
 		where no = #{no}
 	</select>
 	
-	<!-- 3. 게시판 글쓰기 -->
+	<!-- 3. 이미지 등록 -->
 	<insert id="write">
-		insert into image(no, title, content, writer, pw)
-		values(image_seq.nextval, #{title}, #{content}, #{writer}, #{pw})
+		insert into image(no, title, content, id, fileName)
+		values(image_seq.nextval, #{title}, #{content}, #{id}, #{fileName})
 	</insert>
 	
-	<!-- 4. 게시판 글수정 -->
+	<!-- 4-1. 이미지 파일 수정 -->
+	<update id="updateFile">
+		update image set fileName = #{fileName}
+		where no = #{no}
+	</update>
+	
+	<!-- 4-2. 이미지 정보 수정 -->
 	<update id="update">
-		update image set title = #{title}, content = #{content}, writer = #{writer}
-		where no = #{no} and pw = #{pw}
+		update image set title = #{title}, content = #{content}
+		where no = #{no}
 	</update>
 	
 	<!-- 5. 게시판 글삭제 -->
