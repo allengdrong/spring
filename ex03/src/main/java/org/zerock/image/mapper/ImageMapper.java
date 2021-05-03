@@ -26,4 +26,7 @@ public interface ImageMapper {
 	// 4-2. 이미지 정보 수정 - 제목, 내용
 	public int update(ImageVO vo);
 	
+	// 5. 이미지 삭제
+	public int delete(Long no);
+	
 }

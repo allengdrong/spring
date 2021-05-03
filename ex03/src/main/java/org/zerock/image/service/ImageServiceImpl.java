@@ -51,4 +51,10 @@ public class ImageServiceImpl implements ImageService{
 		return mapper.update(vo);
 	}
 
+	@Override
+	public int delete(Long no) throws Exception {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 }

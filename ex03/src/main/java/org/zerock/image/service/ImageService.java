@@ -24,4 +24,6 @@ public interface ImageService {
 	public int update(ImageVO vo) throws Exception; 
 	
 	// 6. 이미지 삭제
+	public int delete(Long no) throws Exception;
+	
 }

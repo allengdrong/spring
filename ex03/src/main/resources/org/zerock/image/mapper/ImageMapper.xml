@@ -97,6 +97,7 @@
 	<!-- 5. 게시판 글삭제 -->
 	<delete id="delete">
 		delete from image
-		where no = #{no} and pw = #{pw}
+		where no = #{no}
 	</delete>
+	
 </mapper>

@@ -9,10 +9,10 @@
 <meta charset="UTF-8">
 <title>이미지 보기</title>
 
-<meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<!-- <meta name="viewport" content="width=device-width, initial-scale=1"> -->
+<!--   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"> -->
+<!--   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> -->
+<!--   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script> -->
 
 <script type="text/javascript">
 $(function(){
@@ -57,6 +57,13 @@ $(function(){
 
 		// 강제적으로 폼 데이터를 전송한다.
 		$("#updateFileForm").submit();
+	});
+	
+	// 삭제 버튼 이벤트 처리 - 위 아래 버튼이므로 id는 사용하지 않는다. class 사용.
+	$(".deleteBtn").click(function(){
+		// 확인을 누르면 true가 취소를 누르면 false가 리턴된다.
+		// false가 리턴되면 a 태그를 취소시킨다.
+		return confirm("정말 삭제하시겠습니까?");
 	});
 });
 </script>
@@ -108,7 +115,17 @@ $(function(){
 		</tr>
 		<tr>
 			<td colspan="2">
-			
+				<c:if test="${vo.id == login.id || login.gradeNo == 9}">
+					<!-- 작성자가 로그인한 회원인 경우와 관리자에게만 나타나는 메뉴 -->
+					<a href="update.do?no=${vo.no }&page=${param.page }&perPageNum=${param.perPageNum}" class="btn btn-default">수정(제목,내용)</a>
+					<button type="button" class="btn btn-default"
+					 data-toggle="modal" data-target="#myModal">파일바꾸기</button>
+					<a href="delete.do?no=${vo.no }&perPageNum=${param.perPageNum}&deleteFile=${vo.fileName}"
+					class="btn btn-default deleteBtn">삭제</a>
+				</c:if>
+				<!-- EL 객체 - param.page => rquerst.getParameter("page") -->
+				<a href="list.do?page=${param.page }&perPageNum=${param.perPageNum}"
+				 class="btn btn-default">리스트</a>
 			</td>
 		</tr>
 	</table>

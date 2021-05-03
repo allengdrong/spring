@@ -2,6 +2,8 @@ package com.webjjang.util.file;
 
 import java.io.File;
 
+import javax.servlet.http.HttpServletRequest;
+
 public class FileUtil {
 
 	// 파일이 존재하는지 확인하는 메서드
@@ -71,5 +73,10 @@ public class FileUtil {
 		
 		return file;
 	}
+	
+	//서버의 상대적인 경로를 넣으면 절대 위치로 바꿔주는 메서드
+		public static String getRealPath(HttpServletRequest request, String path) {
+			return request.getServletContext().getRealPath(path);
+		}
 	
 }
