@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespcae="package + interface" -->
+<mapper namespace="com.mcbt.tq.mapper.TqMapper">
+	<!-- 1. 게시판 리스트 -->
+	<!-- id="method" -->
+	<select id="list" resultType="com.mcbt.tq.vo.TqVO">
+		select rnum, no, id, writeDate, quiz, lev, right
+		from
+		(	
+			select rownum rnum, no, id, writeDate, quiz, lev, right
+			from(
+				select no, id, writeDate, quiz, lev, right
+				from tq
+					order by no desc
+			)
+		)
+		where rnum between #{startRow} and #{endRow}
+	</select>
+	
+		<!-- 1-1. 게시판 전체 글의 갯수 -->
+	<select id="getTotalRow" resultType="java.lang.Long">
+		select count(*) from tq
+	</select>
+	
+</mapper>

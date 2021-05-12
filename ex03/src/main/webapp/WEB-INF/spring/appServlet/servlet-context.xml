@@ -39,6 +39,13 @@
 	
 	<aop:aspectj-autoproxy></aop:aspectj-autoproxy>
 	
+	<interceptors>
+		<interceptor>
+			<mapping path="/**/*.do"/>
+			<beans:bean class="org.zerock.util.interceptor.AuthorityInterceptor" />
+		</interceptor>
+	</interceptors>
+	
 	
 	
 </beans:beans>

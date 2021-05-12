@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace="pakage + interface" -->
+<mapper namespace="com.mcbt.member.mapper.MemberMapper">
+	<select id="login" resultType="com.mcbt.member.vo.LoginVO">
+		select id, name, gradeNo
+		from member
+		where id = #{id} and pw = #{pw}
+	</select>
+	<insert id="write">
+				insert into image(id, pw, name, rrn, alias, gender, birth, tel, email)
+		values(member_seq.nextval, #{id}, #{pw}, #{name},#{rrn}, #{alias}, #{gender}, #{birth}, #{tel}, #{email})
+	</insert>
+</mapper>
