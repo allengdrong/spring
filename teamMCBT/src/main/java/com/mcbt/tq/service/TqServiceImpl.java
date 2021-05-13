@@ -37,15 +37,15 @@ public class TqServiceImpl implements TqService {
 	}
 
 	@Override
-	public TqVO view(Long no, int inc) throws Exception {
+	public TqVO view(Long no) throws Exception {
 		// TODO Auto-generated method stub
-		return null;
+		return mapper.view(no);
 	}
 
 	@Override
 	public int write(TqVO vo) throws Exception {
 		// TODO Auto-generated method stub
-		return 0;
+		return mapper.write(vo);
 	}
 
 	@Override

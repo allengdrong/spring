@@ -16,9 +16,6 @@ public interface TqMapper {
 	// 2. 게시판 글보기
 	public TqVO view(Long no);
 
-	// 2-1. 게시판 조회수 1증가
-	public int increase(Long no);
-
 	// 3. 게시판 글쓰기
 	public int write(TqVO vo);
 

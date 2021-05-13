@@ -45,11 +45,11 @@ public class TqController {
 	// Model 객체 - 처리된 데이터를 JSP에 전달
 	// no, inc - 숫자 타입 : 원래는 String으로 데이터 전달. 없으면 null이 된다.
 	// null을 숫자로 변환하는 과정에서 오류가 난다.
-	public String view(Model model, Long no, int inc, @ModelAttribute PageObject pageObject) throws Exception {
+	public String view(Model model, Long no, @ModelAttribute PageObject pageObject) throws Exception {
 		
 		log.info("view().no : "+ no +" - 게시판 글보기 --------------");
 		
-		model.addAttribute("vo", service.view(no, inc));
+		model.addAttribute("vo", service.view(no));
 		
 		return MODULE + "/view";
 	}
@@ -81,7 +81,7 @@ public class TqController {
 		
 		// jsp에 수정할 데이터를 보내야 한다. 데이터가 DB에 있다. view()
 		
-		model.addAttribute("vo", service.view(no, 0));
+		model.addAttribute("vo", service.view(no));
 		
 		return MODULE + "/update";
 	}
@@ -100,7 +100,7 @@ public class TqController {
 		
 		rttr.addFlashAttribute("msg", "게시판 글수정이 성공적으로 되었습니다.");
 		
-		return "redirect:view.do?no=" + vo.getNo() + "&inc=0"
+		return "redirect:view.do?no=" + vo.getNo()
 			+ "&page=" + pageObject.getPage() 
 			+ "&perPageNum=" + pageObject.getPerPageNum()
 			+ "&key=" + pageObject.getKey()

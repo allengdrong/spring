@@ -12,8 +12,7 @@ public interface TqService {
 	public List<TqVO> list(PageObject pageObject) throws Exception;
 
 	// 2. 게시판 글보기
-		//	조회수 1증가(리스트->글보기) + 글보기 데이터
-		public TqVO view(Long no, int inc) throws Exception;
+		public TqVO view(Long no) throws Exception;
 		
 		// 3. 게시판 글쓰기
 		public int write(TqVO vo) throws Exception;

@@ -72,9 +72,18 @@ $(function() {
 		<c:if test="${!empty list }">
 			<c:forEach items="${list }" var="vo">
 				<li class="list-group-item dataRow">
-					<div>
+					<div class="col-12">
 						<span class="no">${vo.no }</span>.
-						${vo.quiz }
+						${vo.quiz } 
+						<c:if test="${vo.accept == '대기' }">
+							<div class="col-3 label label-default pull-right" style="width: 5em; height: 2em; align-content: center; padding-top: 0.5em; margin-top: 1em;"><span style="padding-top: 3em; ">${vo.accept }</span></div>
+						</c:if>
+						<c:if test="${vo.accept == '승인' }">
+							<div class="col-3 label label-primary pull-right"style="width: 5em; height: 2em; align-content: center; padding-top: 0.5em; margin-top: 1em;"><span style="padding-top: 3em; ">${vo.accept }</span></div>
+						</c:if>
+						<c:if test="${vo.accept == '거절' }">
+							<div class="col-3 label label-danger pull-right"style="width: 5em; height: 2em; align-content: center; padding-top: 0.5em; margin-top: 1em;"><span style="padding-top: 3em; ">${vo.accept }</span></div>
+						</c:if>
 					</div>
 					${vo.id }
 					(<fmt:formatDate value="${vo.writeDate }"/>)
