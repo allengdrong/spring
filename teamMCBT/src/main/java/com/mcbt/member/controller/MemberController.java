@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -23,7 +24,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.mcbt.member.service.MemberService;
 import com.mcbt.member.vo.LoginVO;
 import com.mcbt.member.vo.WriteVO;
-
+import com.webjjang.util.PageObject;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -86,6 +87,8 @@ public class MemberController {
 		
 		return "redirect:/board/list.do";
 	}
+
+
 	//3. 게시판 등록 폼 / write.do - get
 	@GetMapping("/writeForm.do")
 	public String writeForm() {
@@ -97,8 +100,8 @@ public class MemberController {
 	public String write(WriteVO vo,
 			RedirectAttributes rttr) throws Exception {
 		log.info("write().vo : " + vo);
-		
-		// db에 데이터 저장하기
+			
+		// db에 데이터 저장하기	
 		service.write(vo);
 		
 		// addFlashAttribute() - 단 일회만 사용 가능한 정보 저장

@@ -27,23 +27,25 @@
 			<param-value>true</param-value>
 		</init-param>
 		<load-on-startup>1</load-on-startup>
-		
+	
 		<multipart-config>
-			<!-- 용량이 적으면 Main Memory 사용. 용량이 커지면 파일 사용 -->
-			<location>c:\\upload\\temp</location>
-			<max-file-size>20971520</max-file-size><!-- 1024 * 1024 * 20 : 파일 한개의 용량 제한 : 20 MB -->
-			<max-request-size>41943040</max-request-size><!-- 전체 파일 사이즈 -->
-			<file-size-threshold>20971520</file-size-threshold><!-- 20M 이하면 메모리 / 초과하면 파일 -->
+			<!-- 용량이 적으면 메인메모리 사용 / 용량이 커지면 파일 사용 -->
+			<location>C:\\upload\\tmp</location>
+			<!-- 1024*1024*20 : 파일 한 개의 용량 제한 : 20MB 이하면 메모리 / 초과하면 파일 -->
+			<max-file-size>20971520</max-file-size>
+			<max-request-size>41943040</max-request-size>
+			<file-size-threshold>20971520</file-size-threshold><!-- 20M 이하면 메모리 / 초과하면 
+				파일 -->
 		</multipart-config>
-		
+	
 	</servlet>
-		
+	
 	<servlet-mapping>
 		<servlet-name>appServlet</servlet-name>
 		<url-pattern>/</url-pattern>
 	</servlet-mapping>
-	
-		<!-- spring 한글처리 필터 적용 -->
+
+	<!-- spring 한글처리 필터 적용 -->
 	<filter>
 		<filter-name>encodingFilter</filter-name>
 		<filter-class>
@@ -59,14 +61,15 @@
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
 	
+	<!-- sitemesh filter - 전체 레이아웃 -->
 	<filter>
-  <description>사이트에 레이아웃을 잡는 필터 처리</description>
-  <filter-name>sitemesh</filter-name>
-  <filter-class>com.opensymphony.sitemesh.webapp.SiteMeshFilter</filter-class>
- </filter>
- <filter-mapping>
-  <filter-name>sitemesh</filter-name>
-  <url-pattern>*.do</url-pattern>
- </filter-mapping>
-
+	<description>사이트에 레이아웃을 잡는 필터 처리</description>
+		<filter-name>sitemesh</filter-name>
+		<filter-class>com.opensymphony.sitemesh.webapp.SiteMeshFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>sitemesh</filter-name>
+		<url-pattern>*.do</url-pattern>
+	</filter-mapping>
+	
 </web-app>

@@ -41,7 +41,7 @@ function addNumZero(data){
 
 // 날짜 데이터를 timestemp라는 Long 타입의 긴 숫자를 받아서 날짜 계산에 의해 현재 시간 기준으로
 // 24이 지났으면 날짜 문자열을 그렇지 않으면 숫자 문자열을 돌려주는 함수.
-function displyTime(timeStemp){
+function displayTime(timeStemp){
 	// 오늘 날짜 객체 만들기
 	var today = new Date();
 	// 오늘 날짜 타임스템프에서 비교해할 날짜의 타임스템프를 빼기
