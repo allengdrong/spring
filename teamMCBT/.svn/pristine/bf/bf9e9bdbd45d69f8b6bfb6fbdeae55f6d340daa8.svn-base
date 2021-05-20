@@ -122,16 +122,14 @@ $(function(){
 	
 	// 댓글 등록 버튼 이벤트 처리 : 댓글의 모달창 정보 조정과 보이기 --------------------------------
 	$("#writeReplyBtn").click(function(){
-		// alert("댓글등록");
+		alert("댓글등록");
 		
 		// 댓글 모달 창의 제목 바꾸기
-		$("#replyModalTitle").text("댓글작성");
+		$("#replyModalTitle").text("Reply Write");
 		
 		// 작업할 데이터의 입력란을 보이게 안보이게
 		$("#replyModal .form-group").show();
 		$("#replyRnoDiv").hide();
-		$("#replyNoDiv").hide();
-		$("#replyIdDiv").hide();
 		
 		// 작업할 버튼을 보이게 안보이게
 		var footer = $("#replyModal .modal-footer");
@@ -140,24 +138,17 @@ $(function(){
 		
 		
 		// reply > Form input 데이터 지우기 : input 중에서 id="replyNo"는 제외시킨다. not
-		replyModal.find("textarea").val("");
-		
-		
+		replyModal.find("input, textarea").not("#replyNo").val("");
 		
 		replyModal.modal("show");
 	});
 	
 	// 댓글 모달창의 등록 버튼에 대한 이벤트 처리 - 입력된 데이터를 가져와서 JSON 데이터 만들기 - 서버에 전송
 	$("#replyModalWriteBtn").click(function(){
-		
-		var id = $("#replyId").val();
-		
-		// alert(id);
-		
 		var reply = {};
 		reply.no = $("#replyNo").val();
 		reply.content = $("#replyContent").val();
-		reply.id = id;
+		reply.id = $("#replyId").val();
 		// reply.perPageNum = repPerPageNum;
 	// alert(reply);
 	// alert(JSON.stringify(reply));
@@ -177,13 +168,11 @@ $(function(){
 	$(".chat").on("click", ".replyUpdateBtn",function(){
 		// alert("댓글 수정");
 		// 모달창 제목 바꾸기
-		$("#replyModalTitle").text("댓글 수정");
+		$("#replyModalTitle").text("Reply Update");
 		
 		// 작업할 데이터의 입력란을 보이게 안보이게
 		$("#replyModal .form-group").show();
-		$("#replyRnoDiv").hide();
 		$("#replyNoDiv").hide();
-		$("#replyIdDiv").hide();
 		
 		// 작업할 버튼을 보이게 안보이게
 		var footer = $("#replyModal .modal-footer");
@@ -197,7 +186,7 @@ $(function(){
 		// html tag 안에 속성으로 data-rno="2" 값을 넣어 둔것은 obj.data("rno")로 찾아서 쓴다.
 		var rno = li.data("rno");
 		var content = li.find(".replyContentData").text();
-		var id = $("#replyId").val();
+		var id = li.find(".replyIdData").text();
 		
 		
 		// 데이터 셋팅
@@ -217,7 +206,6 @@ $(function(){
 		var reply = {};
 		reply.rno = $("#replyRno").val();
 		reply.content = $("#replyContent").val();
-		reply.id = $("#replyId").val();
 		
 		// 수집한 데이터 확인
 		// alert(JSON.stringify(reply));
@@ -253,12 +241,11 @@ $(function(){
 	$(".chat").on("click", ".replyDeleteBtn", function(){
 		// alert("댓글 삭제");
 		// 모달창 제목 바꾸기
-		$("#replyModalTitle").text("댓글 삭제");
+		$("#replyModalTitle").text("Reply Delete");
 		
 		// 작업할 데이터의 입력란을 보이게 안보이게
 		$("#replyModal .form-group").show();
-		
-		$("#replyNoDiv, #replyRnoDiv, #replyContentDiv, #replyIdDiv").hide();
+		$("#replyNoDiv, #replyContentDiv, #replyWriterDiv").hide();
 		
 		// 작업할 버튼을 보이게 안보이게
 		var footer = $("#replyModal .modal-footer");
@@ -272,8 +259,8 @@ $(function(){
 		// 댓글 번호 셋팅
 		$("#replyRno").val(rno);
 		
-// 		// 댓글 비밀번호 지우기
-// 		$("#replyPw").val("");
+		// 댓글 비밀번호 지우기
+		$("#replyPw").val("");
 		
 		// 댓글 모달 보이게
 		replyModal.modal("show");
@@ -286,6 +273,7 @@ $(function(){
 		// 데이터 수집
 		var reply= {};
 		reply.rno = $("#replyRno").val();
+		reply.pw = $("#replyPw").val();
 		
 		// reply.js 안에 있는 replyService.delete(reply JSON, 성공함수, 오류함수)
 		replyService.delete(reply,
@@ -502,12 +490,12 @@ $(function(){
 								<textarea name="content" class="form-control" rows="3" id="replyContent"
 								required="required"></textarea>
 							</div>
-							<div class="form-group" id="replyIdDiv">
-								<label for="replyId">작성자:</label> 
-								<input name="id"type="text" class="form-control" id="replyId"
-								readonly="readonly" value="${login. id }">
-							</div>
-<!-- 							<div class="form-group" id="replyDeleteAlert"> -->
+<!-- 							<div class="form-group" id="replyWriterDiv"> -->
+<!-- 								<label for="replyWriter">작성자:</label>  -->
+<!-- 								<input name="writer"type="text" class="form-control" id="replyWriter" -->
+<!-- 								required="required" pattern="[A-Za-z까-힣][A-Za-z까-힣0-9]{1,9}"> -->
+<!-- 							</div> -->
+<!-- 							<div class="form-group" id="replyPwDiv"> -->
 <!-- 								<label for="replyPW">비밀번호:</label>  -->
 <!-- 								<input name="pw"type="text" class="form-control" id="replyPw" -->
 <!-- 								 pattern=".{4,20}"> -->

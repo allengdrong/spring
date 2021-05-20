@@ -42,21 +42,6 @@
 				title="4자이상 100자 이하 입력" placeholder="4자이상 100자 이하 입력">
 			</div>
 			<div class="form-group">
-				<label for="">보기:</label>
-					<div class="radio">
-				  <label><input type="radio" name="optradio">문제보기1</label>
-				</div>
-				<div class="radio">
-				  <label><input type="radio" name="optradio">문제보기2</label>
-				</div>
-				<div class="radio">
-				  <label><input type="radio" name="optradio">문제보기3</label>
-				</div>
-				<div class="radio">
-				  <label><input type="radio" name="optradio">문제보기4</label>
-				</div>
-			</div>
-			<div class="form-group">
 				<label for="id">아이디:</label> <input name="id" type="text" value="${id }"
 					class="form-control" id="id"
 					required="required" readonly="readonly">

@@ -39,12 +39,13 @@ public class AuthorityInterceptor extends HandlerInterceptorAdapter {
 		authMap.put("/image/updateFile.do", 1);
 		authMap.put("/image/delete.do", 1);
 		
-		// 문제 출제 게시판 - 회원 : 1
+		// 질문답변 - 리스트, 보기, 질문하기, 답변하기, 수정, 삭제 : 1 --> 일반회원도 답변이 가능한 시스템
 		// authMap.put("/qna/list.do", 1);
-		authMap.put("/tq/view.do", 1);
-		authMap.put("/tq/write.do", 1);
-		authMap.put("/tq/update.do", 1);
-		authMap.put("/tq/delete.do", 1);
+		authMap.put("/qna/view.do", 1);
+		authMap.put("/qna/question.do", 1);
+		authMap.put("/qna/answer.do", 1);
+		authMap.put("/qna/update.do", 1);
+		authMap.put("/qna/delete.do", 1);
 		
 		// 메시지 - 리스트, 보기, 보내기, 삭제 : 1
 		authMap.put("/message/list.do", 1);

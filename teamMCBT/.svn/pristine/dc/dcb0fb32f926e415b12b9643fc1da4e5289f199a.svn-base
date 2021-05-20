@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespcae="package + interface" -->
+<mapper namespace="com.mcbt.tq.mapper.TqMapper">
+	<!-- 1. 게시판 리스트 -->
+	<!-- id="method" -->
+	<select id="list" resultType="com.mcbt.tq.vo.TqVO">
+		select rnum, no, id, writeDate, accept, quiz, lev, right
+		from
+		(	
+			select rownum rnum, no, id, writeDate, accept, quiz, lev, right
+			from(
+				select no, id, writeDate, accept, quiz, lev, right
+				from tq
+					order by no desc
+			)
+		)
+		where rnum between #{startRow} and #{endRow}
+	</select>
+	
+		<!-- 1-1. 게시판 전체 글의 갯수 -->
+	<select id="getTotalRow" resultType="java.lang.Long">
+		select count(*) from tq
+	</select>
+	
+	<!-- 2. 게시판 글보기 -->
+	<select id="view" resultType="com.mcbt.tq.vo.TqVO">
+		select no, quiz, lev, id, writeDate, accept, right
+		from tq
+		where no = #{no}
+	</select>
+	
+		<!-- 3. 게시판 글쓰기 -->
+	<insert id="write">
+		insert into tq(no, quiz, lev, id, right)
+		values(tq_seq.nextval, #{quiz}, #{lev}, #{id}, #{right})
+	</insert>
+	
+	<!-- 4. 게시판 글수정 -->
+<!-- 	<update id="update"> -->
+<!-- 		update board set title = #{title}, content = #{content}, writer = #{writer} -->
+<!-- 		where no = #{no} and pw = #{pw} -->
+<!-- 	</update> -->
+	
+	<!-- 5. 게시판 글삭제 -->
+<!-- 	<delete id="delete"> -->
+<!-- 		delete from board -->
+<!-- 		where no = #{no} and pw = #{pw} -->
+<!-- 	</delete> -->
+	
+</mapper>
