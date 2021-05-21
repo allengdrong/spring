@@ -14,10 +14,22 @@
 			from(
 				select no, id, writeDate, accept, quiz, lev, right
 				from tq
+		<if test="lev == 'top'">
+			where #{pageObject.startRow} = #{pageObject.endRow}
+			or lev like '%'||#{lev}||'%'
+		</if>
+		<if test="lev == 'mid'">
+			where #{pageObject.startRow} = #{pageObject.endRow}
+			or lev like '%'||#{lev}||'%'
+		</if>
+		<if test="lev == 'bottom'">
+			where #{pageObject.startRow} = #{pageObject.endRow}
+			or lev like '%'||#{lev}||'%'
+		</if>
 					order by no desc
 			)
 		)
-		where rnum between #{startRow} and #{endRow}
+		where rnum between #{pageObject.startRow} AND #{pageObject.endRow}
 	</select>
 	
 		<!-- 1-1. 게시판 전체 글의 갯수 -->
@@ -34,8 +46,8 @@
 	
 		<!-- 3. 게시판 글쓰기 -->
 	<insert id="write">
-		insert into tq(no, quiz, lev, id, right)
-		values(tq_seq.nextval, #{quiz}, #{lev}, #{id}, #{right})
+		insert into tq(no, quiz, lev, id)
+		values(tq_seq.nextval, #{quiz}, #{lev}, #{id})
 	</insert>
 	
 	<!-- 4. 게시판 글수정 -->

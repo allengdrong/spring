@@ -1,10 +1,11 @@
 package com.mcbt.util;
 
-public class ReplyPage {
+// 페이지 나누기 관련 작업 클래스
+public class BoardPager {
 	// 페이지당 게시물 수
-	public static final int PAGE_SCALE = 5;
+	public static final int PAGE_SCALE = 10;
 	// 화면당 페이지 수
-	public static final int BLOCK_SCALE = 5;
+	public static final int BLOCK_SCALE = 10;
 	private int curPage; // 현재 페이수
 	private int prevPage; // 이전 페이지
 	private int nextPage; // 다음 페이지
@@ -19,11 +20,14 @@ public class ReplyPage {
 	// [이전] blockBegin -> 41 42 43 44 45 46 47 48 49 50 [다음]
 	private int blockBegin; // 현재 페이지 블록의 시작번호
 	// [이전] 41 42 43 44 45 46 47 48 49 50 <- blockEnd [다음]
-	private int blockEnd; // 현재 페이지 블록의 끝번호
+	private int blockEnd; // 현재 페이지 블록의 끝번호private String option;
+	private String category;
+    private String option;
+    private String q;
 	
 	// 생성자
 	// BoardPager(레코드 갯수, 현재 페이지 번호)
-	public ReplyPage(int count, int curPage){
+	public BoardPager(int count, int curPage){
 		curBlock = 1; // 현재 페이지 블록 번호
 		this.curPage = curPage; // 현재 페이지 설정
 		setTotPage(count); // 전체 페이지 갯수 계산
@@ -154,6 +158,30 @@ public class ReplyPage {
 	public void setBlockEnd(int blockEnd) {
 		this.blockEnd = blockEnd;
 	}
+
+    public String getoption() {
+        return option;
+    }
+
+    public void setoption(String option) {
+        this.option = option;
+    }
+
+    public String getq() {
+        return q;
+    }
+
+    public void setq(String q) {
+        this.q = q;
+    }
+
+    @Override
+    public String toString() {
+        return "BoardPager{" +
+                "option='" + option + '\'' +
+                ", q='" + q + '\'' +
+                '}';
+    }
 	
 	
 }
