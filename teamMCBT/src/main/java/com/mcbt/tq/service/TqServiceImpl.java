@@ -54,6 +54,12 @@ public class TqServiceImpl implements TqService {
 		// TODO Auto-generated method stub
 		return mapper.write(vo);
 	}
+	
+	@Override
+	public TqVO write02(Long no) throws Exception {
+		// TODO Auto-generated method stub
+		return mapper.write02(no);
+	}
 
 	@Override
 	public int update(TqVO vo) throws Exception {
@@ -65,6 +71,12 @@ public class TqServiceImpl implements TqService {
 	public int delete(TqVO vo) throws Exception {
 		// TODO Auto-generated method stub
 		return mapper.delete(vo);
+	}
+	
+	@Override
+	public long getMax(Long no) throws Exception {
+		// TODO Auto-generated method stub
+		return mapper.getMax(no);
 	}
 
 }

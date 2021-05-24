@@ -82,10 +82,12 @@
 
 	<!-- 4. 게시판 글수정 -->
 	<update id="update">
-		update board set title = #{title}, content = #{content}, writer = #{writer}, category = #{category} where no = #{no}
+		update board set category = #{category}, title = #{title}, content = #{content}, writer = #{writer}
+		where no = #{no}
 	</update>
 
 	<update id="delete">
-		UPDATE board SET show = 'N' WHERE no = #{no}
+		UPDATE board SET show = 'N'
+		WHERE no = #{no}
 	</update>
 </mapper>

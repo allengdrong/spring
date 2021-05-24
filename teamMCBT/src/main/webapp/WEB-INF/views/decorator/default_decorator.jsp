@@ -125,11 +125,7 @@ article {
 				</div>
 				<div class="collapse navbar-collapse" id="myNavbar">
 					<ul class="nav navbar-nav">
-						<li><a href="${path }/notice/list.do">공지사항</a></li>
-						<li><a href="${path }/image/list.do">이미지</a></li>
-						<li><a href="${path }/board/list.do">게시판</a></li>
-						<!-- $amp; : &, &lt; : <, &gt; : >. &ndsp; : blank -->
-						<li><a href="${path }/qna/list.do">Q&amp;A</a></li>
+						<li><a href="${path }/tq/list.do">문제출제</a></li>
 						<c:if test="${!empty login }">
 							<!-- 로그인 되어 있는 경우의 메뉴 -->
 							<li><a href="${path }/message/list.do">메시지</a></li>

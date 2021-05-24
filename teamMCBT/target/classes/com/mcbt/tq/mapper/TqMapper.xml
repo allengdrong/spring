@@ -50,6 +50,18 @@
 		values(tq_seq.nextval, #{quiz}, #{lev}, #{id})
 	</insert>
 	
+	<!-- 게시판 보기 저장 -->
+<!-- 	<insert> -->
+<!-- 	</insert> -->
+	
+	<!-- 3. 게시판 글쓰기 보기 추가 -->
+	<select id="write02" resultType="com.mcbt.tq.vo.TqVO">
+		select no, quiz, lev, id, writeDate, accept, right
+		from tq
+		where no = #{no}
+	</select>
+	
+	
 	<!-- 4. 게시판 글수정 -->
 <!-- 	<update id="update"> -->
 <!-- 		update board set title = #{title}, content = #{content}, writer = #{writer} -->
@@ -57,9 +69,14 @@
 <!-- 	</update> -->
 	
 	<!-- 5. 게시판 글삭제 -->
-<!-- 	<delete id="delete"> -->
-<!-- 		delete from board -->
-<!-- 		where no = #{no} and pw = #{pw} -->
-<!-- 	</delete> -->
+	<delete id="delete">
+		delete from tq
+		where no = #{no}
+	</delete>
+	
+	<!-- 가장 큰 번호 불러오기 -->
+	<select id="getMax" resultType="java.lang.Long">
+		select max(no) from tq
+	</select>
 	
 </mapper>

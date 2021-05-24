@@ -75,7 +75,7 @@ public class MemberController {
 		rttr.addFlashAttribute("msg", "정상적으로 로그인이 되었습니다.");
 		
 		// 로그인이 끝나면 이동할 url
-		return "redirect:/board/list.do";
+		return "redirect:/tq/list.do";
 	}
 	
 	

@@ -1,15 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-	<mapper namespace="com.mcbt.tq.mapper.TqExMapper">
+<mapper namespace="com.mcbt.tq.mapper.TqExMapper">
+
+	<!-- 1. 보기 리스트 -->
 	<select id="list" resultType="com.mcbt.tq.vo.TqExVO">
-	
-	SELECT ENO,NO,EX FROM TEST_EX WHERE NO = #{no}
+		select eno, no, ex from tq_ex where no = #{no}
 	</select>
-	
-	<insert id="write" >
-  	INSERT INTO TEST_EX(EX)
-  	VALUES(#{ex})
-  </insert>
-  
-	</mapper>
+
+	<!-- 2. 보기 생성 -->
+	<insert id="write">
+		insert into tq_ex(ex)
+		values(#{ex})
+	</insert>
+
+	<!-- 3. 보기 수정 -->
+	<update id="update">
+		update tq_ex set ex = #{ex}, id = #{id}
+		where eno =
+		#{eno}
+	</update>
+
+	<!-- 4. 보기 삭제 -->
+	<delete id="delete">
+		delete from tq_ex
+		where ex = #{ex}
+	</delete>
+
+</mapper>

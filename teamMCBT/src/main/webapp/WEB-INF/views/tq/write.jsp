@@ -6,12 +6,6 @@
 <meta charset="UTF-8">
 <title>문제 출제 게시판 글쓰기</title>
 
-<!-- bootstrap 라이브러리 등록 CDN방식 : sitemesh에서 decorator.jsp에서 한꺼번에 해결 -->
-<!-- <meta name="viewport" content="width=device-width, initial-scale=1"> -->
-<!-- <link rel="stylesheet"	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"> -->
-<!-- <script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> -->
-<!-- <script	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script> -->
-
 <script type="text/javascript">
 	$(function(){
 		$(".cancelBackBtn").click(function(){
@@ -42,17 +36,12 @@
 				pattern=".{4,100}" maxlength="100" required="required"
 				title="4자이상 100자 이하 입력" placeholder="4자이상 100자 이하 입력">
 			</div>
+			
 			<div class="form-group">
 				<label for="id">아이디:</label> <input name="id" type="text" value="${login. id }"
 					class="form-control" id="id"
 					required="required" readonly="readonly">
 			</div>
-<!-- 			<div class="form-group"> -->
-<!-- 				<label for="pw">비밀번호:</label> <input name="pw" type="text" -->
-<!-- 					class="form-control" id="pw" -->
-<!-- 					pattern="[^가-힣ㄱ-ㅎㅏ-]{4,20}" required="required" -->
-<!-- 					title="비밀번호는 4-20자까지 입력, 한글은 입력할 수 없습니다."> -->
-<!-- 			</div> -->
 
 			<button class="btn btn-default">등록</button>
 			<button class="btn btn-default" type="reset">새로입력</button>

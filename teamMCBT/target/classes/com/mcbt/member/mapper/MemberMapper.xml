@@ -4,6 +4,16 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <!-- namespace="pakage + interface" -->
 <mapper namespace="com.mcbt.member.mapper.MemberMapper">
+
+	<select id="list">
+		select id, pw, name, rrn, alias, gender, birth, tel, email, regDate, conDate, status, gradeNo, gradeName)
+		from(
+			select id, name, alias, gender, birth,tel, email, regDate
+			from member
+			order by no desc
+		)
+	</select>
+
 	<select id="login" resultType="com.mcbt.member.vo.LoginVO">
 		select id, name, gradeNo
 		from member
