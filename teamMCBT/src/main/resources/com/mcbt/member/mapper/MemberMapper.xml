@@ -5,22 +5,32 @@
 <!-- namespace="pakage + interface" -->
 <mapper namespace="com.mcbt.member.mapper.MemberMapper">
 
-	<select id="list">
-		select id, pw, name, rrn, alias, gender, birth, tel, email, regDate, conDate, status, gradeNo, gradeName)
-		from(
-			select id, name, alias, gender, birth,tel, email, regDate
-			from member
-			order by no desc
-		)
+	<select id="list" resultType="com.mcbt.member.vo.MemberVO">
+		SELECT id, name, alias, gender, birth, tel, email, regDate
+		from member
 	</select>
-
+	
+	<select id="view" resultType="com.mcbt.board.vo.BoardVO">
+		SELECT id, pw, name, alias, gender, birth, tel, email, regDate
+		FROM member
+	</select>
+	
 	<select id="login" resultType="com.mcbt.member.vo.LoginVO">
-		select id, name, gradeNo
+		select id, name
 		from member
 		where id = #{id} and pw = #{pw}
 	</select>
 	<insert id="write">
-				insert into image(id, pw, name, rrn, alias, gender, birth, tel, email)
-		values(member_seq.nextval, #{id}, #{pw}, #{name},#{rrn}, #{alias}, #{gender}, #{birth}, #{tel}, #{email})
+				insert into member(id, pw, name, alias, gender, birth, tel, email)
+		values( #{id}, #{pw}, #{name}, #{alias}, #{gender}, #{birth}, #{tel}, #{email})
 	</insert>
+	
+	<!--회원 정보수정 -->
+	<update id="memberUpdate">
+		UPDATE member
+		USERPW = #{pw},
+		USERALIAS = #{alias}
+		WHERE USERID = #{userId}
+	</update>
+	
 </mapper>

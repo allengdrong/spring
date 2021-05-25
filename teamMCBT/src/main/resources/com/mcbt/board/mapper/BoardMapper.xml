@@ -13,9 +13,9 @@
 		SELECT ROWNUM, no, title, b.writedate, writer, hit, show, category,
 		<!-- **댓글숫자표시 -->
 		(SELECT COUNT(*) replyhit FROM reply WHERE no = b.no) AS replyhit FROM
-		board b, member m
+		board b
 		<!-- mybatis에서는 데이터 자동변환을 한다. 글자가 한자이면 char -->
-		<include refid="search" />
+		<include refid="search" />	
 
 		order by no desc, b.writedate DESC
 		) A
@@ -23,14 +23,14 @@
 	</select>
 
 	<select id="countArticle" resultType="int">
-		select count(*) from board b, member m
+		select count(*) from board b
 		<!-- mybatis에서는 데이터 자동변환을 한다. 글자가 한자이면 char -->
 		<include refid="search" />
 	</select>
 
 	<!-- 1-1. 게시판 전체 글의 갯수 -->
 	<select id="getTotalRow" resultType="int">
-		select count(*) cnt from board b, member m
+		select count(*) cnt from board b
 		<!-- mybatis에서는 데이터 자동변환을 한다. 글자가 한자이면 char -->
 		<include refid="search" />
 	</select>
@@ -40,8 +40,7 @@
 		<!-- mybatis에서는 데이터 자동변환을 한다. 글자가 한자이면 char -->
 		<if test="word != null and word != ''.toString()">
 			<!-- 검색하는 데이터가 있는 경우 where가 나온다. -->
-			WHERE
-			b.writer = m.id
+			WHERE b.writer
 			<if test="key == 't'.toString()">
 				OR title like '%' || #{word} || '%'
 			</if>

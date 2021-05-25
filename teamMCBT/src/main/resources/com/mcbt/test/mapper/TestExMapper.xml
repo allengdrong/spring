@@ -7,8 +7,15 @@
   	SELECT ENO,NO,EX FROM TEST_EX WHERE NO = #{no}
   </select>
   
-  <insert id="write" >
-  	INSERT INTO TEST_EX(EX)
-  	VALUES(#{ex})
+  <select id="exWriteForm" resultType="com.mcbt.test.vo.TestVO">
+		SELECT
+		NO,QUIZ,RIGHT FROM TEST WHERE NO = #{no} 
+	</select>
+  
+  <insert id="exWrite" >
+  	INSERT INTO TEST_EX(ENO,NO,EX)
+  	VALUES(test_ex_seq.nextval, #{no}, #{ex})
   </insert>
+  
+  
   </mapper>

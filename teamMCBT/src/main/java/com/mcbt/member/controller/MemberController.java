@@ -44,9 +44,11 @@ public class MemberController {
 	
 	//리스트
 	@GetMapping("/list.do")
-	public String list(Model model, @ModelAttribute PageObject pageObject) throws Exception{
-		log.info("리스트 ㅇㅇ");
-		model.addAttribute("list", service.list(pageObject));
+	// @ModelAttribute - 전달 받은 변수의 값을 model에 담아서 JSP까지 보내준다. 변수 이름으로 사용
+	public String list(Model model) throws Exception{
+		log.info("리스트 ㅇㅇㅇㅇㅇㅇㅇ");
+		
+		model.addAttribute("list",service.list());
 		return MODULE + "/list";
 	}
 
@@ -116,6 +118,6 @@ public class MemberController {
 		// addFlashAttribute() - 단 일회만 사용 가능한 정보 저장
 		rttr.addFlashAttribute("msg", "회원가입 완료.");
 		
-		return MODULE + "/loginForm";
+		return MODULE + "/login";
 	}
 } 

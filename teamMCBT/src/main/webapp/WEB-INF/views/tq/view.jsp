@@ -18,6 +18,9 @@
 <script type="text/javascript" src="/js/reply.js"></script>
 
 <style type="text/css">
+body{ 
+font-size: large; 
+}
 .title_label {
 	border: 1px dotted #ddd;
 }
@@ -355,7 +358,10 @@ $(function(){
 			</li>
 			<li class="list-group-item row">
 				<div class="col-md-2 title_label">보기</div>
-				<div class="col-md-10"></div>
+				<c:forEach items="${tqvo }" var = "tqvo">
+				<div class="col-md-10 ex">${tqvo.eno }
+			${tqvo.ex }</div>
+			</c:forEach>
 			</li>
 			
 			<li class="list-group-item row">

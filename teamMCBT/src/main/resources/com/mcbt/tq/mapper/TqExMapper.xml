@@ -5,24 +5,32 @@
 
 	<!-- 1. 보기 리스트 -->
 	<select id="list" resultType="com.mcbt.tq.vo.TqExVO">
-		select eno, no, ex from tq_ex where no = #{no}
+		select eno, no, ex from tq_ex where
+		no = #{no}
 	</select>
 
-	<!-- 2. 보기 생성 -->
-	<insert id="write">
-		insert into tq_ex(ex)
-		values(#{ex})
+	<!-- 2. 보기 게시판 보기 -->
+	<select id="exWriteForm" resultType="com.mcbt.tq.vo.TqVO">
+		select
+		no, quiz, eno from tq
+		WHERE no = #{no}
+	</select>
+
+	<!-- 2-1. 보기 생성 -->
+	<insert id="exWrite">
+		INSERT INTO tq_ex(eno,no,ex)
+		VALUES(tq_ex_seq.nextval, #{no},#{ex})
 	</insert>
 
 	<!-- 3. 보기 수정 -->
-	<update id="update">
+	<update id="exUpdate">
 		update tq_ex set ex = #{ex}, id = #{id}
 		where eno =
 		#{eno}
 	</update>
 
 	<!-- 4. 보기 삭제 -->
-	<delete id="delete">
+	<delete id="exDelete">
 		delete from tq_ex
 		where ex = #{ex}
 	</delete>

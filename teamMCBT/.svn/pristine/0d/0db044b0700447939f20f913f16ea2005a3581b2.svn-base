@@ -1,0 +1,197 @@
+package com.mcbt.solve.controller;
+
+import java.util.Arrays;
+
+import javax.servlet.http.HttpSession;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.mcbt.member.vo.LoginVO;
+import com.mcbt.solve.service.SolveService;
+import com.mcbt.solve.vo.SolveVO;
+
+import lombok.extern.log4j.Log4j;
+
+@Controller
+@RequestMapping("/solve")
+@Log4j
+public class SolveController {
+
+	private final String MODULE = "solve";
+	
+	@Autowired
+	@Qualifier("ssi")
+	private SolveService service;
+	
+	@GetMapping("/main.do")
+	public String main() {
+		log.info("main() 실행 중..............................");
+		return MODULE + "/main";
+	}
+	
+	// 랜덤으로 문제 번호 10개 가져오기
+	@GetMapping("/random.do")
+	public String random(HttpSession session, String lev) throws Exception {
+		log.info("random() 실행 중.....................");
+		
+		Long cnt = service.getCnt(lev);
+		log.info("lev : " + lev);
+		
+		int [] lotto = new int[10];
+		  
+		  // 중복되지 않는 7개의 숫자를 발생시켜서 저장
+		  for(int i = 0 ; i < lotto.length; i++) {
+		   // 1~45까지의 랜덤 숫자를 발생
+		   int ran = (int)(Math.random()*cnt +1);
+		   // 중복이 되는 지 결과를 저장하는 변수 - boolean
+		   boolean isDuplicate = false;
+		   // 중복이 되지는 검사를 한다.
+		   for(int j = 0; j <= i; j++) {
+		    // 데이터가 중복이 되는 경우
+		    if(lotto[j]==ran) {
+		     isDuplicate = true;
+		     // 중복이 된 경우는 뒤의 데이터를 더이상 검사를 안해도 되므로
+		     // 검사하는 for문을 빠져 나가면 된다.
+		     break;
+		    }
+		   }
+		   // 중복이 되지 않으면 저장, 중복이되면 i-- 시킨다.
+		   if(isDuplicate)i--;
+		   else lotto[i] = ran;
+		  }
+		  
+		  // lotto Data 출력 -rnum에 해당. no를 찾아야 함
+		  System.out.println(Arrays.toString(lotto));
+		  int[] random = lotto;
+		  
+		  int [] nos = service.random(lev, random);
+		  
+		  System.out.println("nos : " + Arrays.toString(nos));
+		   
+		  session.setAttribute("nos", nos);
+		  
+		  return "redirect:solve.do?idx=1";
+	}
+
+	@GetMapping("/solve.do")
+	public String solve(HttpSession session, Model model, int idx) throws Exception {
+		
+		log.info("solve() 실행 중.............................");
+		
+		int[] nos = (int[]) session.getAttribute("nos");
+		
+		int no = nos[idx-1];
+		
+		
+		model.addAttribute("vo", service.quiz(no));
+		
+		model.addAttribute("ex", service.ex(no));
+		
+		return MODULE + "/solve";
+	}	
+	
+	// 다음 문제로 넘어가는 메서드
+	@PostMapping("/next.do")
+	public String next(SolveVO vo, int idx) throws Exception {
+		log.info("next() 실행 중.............................");
+		
+//		LoginVO loginVO = (LoginVO) session.getAttribute("login");
+//		
+//		log.info("write().loginVO : " + loginVO);
+//		
+//		// 전달 받지 않는 데이터의 수집
+//		vo.setId(loginVO.getId());
+		
+		LoginVO login = new LoginVO();
+		login.setId("test");
+		
+		vo.setId(login.getId());
+		
+		service.next(vo);
+		log.info("vo : " + vo);
+		
+		idx = idx + 1;
+		log.info("next().idx : " + idx);
+		
+		if (idx == 11)
+			return "redirect:result.do";
+		
+		return "redirect:solve.do?idx=" + idx;
+	}
+	
+	@GetMapping("/result.do")
+	public String result(SolveVO vo, Model model) throws Exception {
+		log.info("result() 실행 중......................");
+		LoginVO login = new LoginVO();
+		login.setId("test");
+		vo.setId(login.getId());
+		
+		Long correct = service.score(vo);
+		log.info("result.correct : " + correct);
+		
+		Long score = correct * 10;
+		log.info("result.score : " + score);
+		model.addAttribute("score", score);
+		
+		
+		return MODULE + "/result";
+	}
+	
+	@GetMapping("/view.do")
+	public String view() {
+		log.info("view() 실행 중............................");
+		return "redirect:answer.do?idx=1";
+	}
+	
+	@GetMapping("/answer.do")
+	public String answer(HttpSession session, Model model, int idx) throws Exception {
+		
+		log.info("answer() 실행 중.............................");
+		
+		int[] nos = (int[]) session.getAttribute("nos");
+		
+		int no = nos[idx-1];
+		
+		log.info("answer.no : " + no);
+		
+		model.addAttribute("vo", service.answerQuiz(no));
+		
+		model.addAttribute("ex", service.answerEx(no));
+		
+		return MODULE + "/answer";
+	}	
+	
+	// 다음 문제로 넘어가는 메서드
+	@GetMapping("/answerNext.do")
+	public String answerNext(SolveVO vo, int idx) throws Exception {
+		log.info("answerNext() 실행 중.............................");
+		
+		idx = idx + 1;
+		log.info("answerNext().idx : " + idx);
+		
+		return "redirect:answer.do?idx=" + idx;
+	}
+	
+	// 이전 문제로 넘어가는 메서드
+	@GetMapping("/answerBefore.do")
+	public String answerBefore(SolveVO vo, int idx) throws Exception {
+		log.info("answerBefore() 실행 중.............................");
+		
+		idx = idx - 1;
+		log.info("answerBefore().idx : " + idx);
+		
+		return "redirect:answer.do?idx=" + idx;
+	}
+	
+	@GetMapping("/loding.do")
+	public String loding() throws Exception {
+		log.info("loding() 실행 중..............................");
+		return MODULE + "/loding";
+	}
+}

@@ -42,10 +42,10 @@ public class AuthorityInterceptor extends HandlerInterceptorAdapter {
 		// 문제 출제 게시판 - 회원 : 1
 		// authMap.put("/tq/list.do", 1);
 //		authMap.put("/tq/view.do", 1);
-		authMap.put("/tq/write.do", 1);
+//		authMap.put("/tq/write.do", 1);
 //		authMap.put("/tq/write02.do", 1);
-		authMap.put("/tq/update.do", 1);
-		authMap.put("/tq/delete.do", 1);
+//		authMap.put("/tq/update.do", 1);
+//		authMap.put("/tq/delete.do", 1);
 		
 		// 메시지 - 리스트, 보기, 보내기, 삭제 : 1
 		authMap.put("/message/list.do", 1);

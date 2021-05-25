@@ -10,6 +10,11 @@
 <title>문제출제게시판 리스트</title>
 
 <style type="text/css">
+
+body{ 
+font-size: large; 
+}
+
 .dataRow:hover {
 	background: #eee;
 	cursor: pointer;

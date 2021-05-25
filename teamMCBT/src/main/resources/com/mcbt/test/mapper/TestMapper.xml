@@ -34,7 +34,7 @@
 	<!-- 3.문제 보기 -->
 	<select id="view" resultType="com.mcbt.test.vo.TestVO">
 		SELECT
-		NO,QUIZ FROM TEST WHERE NO = #{no} 
+		NO,QUIZ,RIGHT FROM TEST WHERE NO = #{no} 
 	</select>
 	
 	<!-- 4.문제 등록 -->
@@ -43,13 +43,14 @@
 		VALUES(TEST_SEQ.NEXTVAL,#{quiz},#{lev})
 	</insert>
 	
-<!-- 	 5.보기 등록 --> 
-<!-- 	<insert id=""> -->
-<!-- 	</insert> -->
+	<!-- 가장 큰 번호 불러오기 -->
+	<select id="getMax" resultType="java.lang.Long">
+		SELECT MAX(no) FROM TEST
+	</select>
 	
-<!-- 	 6.정답 등록 --> 
-<!-- 	<update id=""> -->
-	
-<!-- 	</update> -->
+	<!-- 5.정답 등록 --> 
+	<update id="right" >
+		UPDATE TEST SET RIGHT= #{right} WHERE NO = #{no}
+	</update>
 	
 </mapper>

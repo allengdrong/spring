@@ -50,10 +50,6 @@
 		values(tq_seq.nextval, #{quiz}, #{lev}, #{id})
 	</insert>
 	
-	<!-- 게시판 보기 저장 -->
-<!-- 	<insert> -->
-<!-- 	</insert> -->
-	
 	<!-- 3. 게시판 글쓰기 보기 추가 -->
 	<select id="write02" resultType="com.mcbt.tq.vo.TqVO">
 		select no, quiz, lev, id, writeDate, accept, right
@@ -61,12 +57,16 @@
 		where no = #{no}
 	</select>
 	
+	<!-- 5.정답 등록 --> 
+	<update id="right" >
+		UPDATE tq SET RIGHT= #{right} WHERE NO = #{no}
+	</update>
 	
 	<!-- 4. 게시판 글수정 -->
-<!-- 	<update id="update"> -->
-<!-- 		update board set title = #{title}, content = #{content}, writer = #{writer} -->
-<!-- 		where no = #{no} and pw = #{pw} -->
-<!-- 	</update> -->
+	<update id="update">
+		update board set quiz = #{quiz}, lev = #{lev}, accept = #{accept}, right = #{right}
+		where no = #{no}
+	</update>
 	
 	<!-- 5. 게시판 글삭제 -->
 	<delete id="delete">
@@ -78,5 +78,6 @@
 	<select id="getMax" resultType="java.lang.Long">
 		select max(no) from tq
 	</select>
+	
 	
 </mapper>
