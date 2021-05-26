@@ -74,6 +74,8 @@ public class MemberController {
 		// 아이디와 비밀번호가 DB정보와 맞으면 로그인 처리한다(session에 loginVO객체를 넣어준다.).
 		session.setAttribute("login", service.login(vo));
 		
+		session.getAttribute("login");
+		
 		rttr.addFlashAttribute("msg", "정상적으로 로그인이 되었습니다.");
 		
 		// 로그인이 끝나면 이동할 url

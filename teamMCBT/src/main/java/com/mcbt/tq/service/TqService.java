@@ -9,7 +9,7 @@ import com.webjjang.util.PageObject;
 public interface TqService {
 	
 	// 1. 문제 출제 게시판 리스트
-	public List<TqVO> list(PageObject pageObject,String lev) throws Exception;
+	public List<TqVO> list(PageObject pageObject,String lev, String accept) throws Exception;
 
 	// 2. 게시판 글보기
 		public TqVO view(Long no) throws Exception;

@@ -20,4 +20,9 @@
 		SELECT COUNT(*) FROM reply
 		WHERE no=#{no}
 	</select>
+	
+	<insert id="write">
+		insert into reply(rno, no, replyer, pw, replyContent)
+		values(reply_seq.nextval, #{no, jdbcType=VARCHAR}, #{replyer, jdbcType=VARCHAR}, #{pw, jdbcType=VARCHAR}, #{replyContent, jdbcType=VARCHAR})
+	</insert>
 </mapper>

@@ -16,7 +16,7 @@
 	</select>
 	
 	<select id="login" resultType="com.mcbt.member.vo.LoginVO">
-		select id, name
+		select id, name, gradeNo
 		from member
 		where id = #{id} and pw = #{pw}
 	</select>

@@ -336,8 +336,9 @@ $(function(){
 			<li class="list-group-item row">
 				<div class="col-md-2 title_label">번호</div>
 				<div class="col-12">
+				<span class="col-md-10">${vo.no }</span>
 						<c:if test="${vo.accept == '대기' }">
-							<div class="col-3 label label-default pull-right" style="width: 5em; height: 2em; align-content: center; padding-top: 0.5em; margin-top: 1em;"><span style="padding-top: 3em; ">${vo.accept }</span></div>
+							<div class="col-3 label label-default pull-right" style="width: 5em; height: 2em; align-content: center; padding-top: 0.5em; margin-top: 1em;">${vo.accept }</div>
 						</c:if>
 						<c:if test="${vo.accept == '승인' }">
 							<div class="col-3 label label-primary pull-right"style="width: 5em; height: 2em; align-content: center; padding-top: 0.5em; margin-top: 1em;"><span style="padding-top: 3em; ">${vo.accept }</span></div>
@@ -346,7 +347,6 @@ $(function(){
 							<div class="col-3 label label-danger pull-right"style="width: 5em; height: 2em; align-content: center; padding-top: 0.5em; margin-top: 1em;"><span style="padding-top: 3em; ">${vo.accept }</span></div>
 						</c:if>
 					</div>
-				<div class="col-md-10">${vo.no }</div>
 			</li>
 			<li class="list-group-item row">
 				<div class="col-md-2 title_label">난이도</div>
@@ -358,9 +358,8 @@ $(function(){
 			</li>
 			<li class="list-group-item row">
 				<div class="col-md-2 title_label">보기</div>
-				<c:forEach items="${tqvo }" var = "tqvo">
-				<div class="col-md-10 ex">${tqvo.eno }
-			${tqvo.ex }</div>
+				<c:forEach items="${exvo }" var = "evo">
+				<div class="col-md-10 ex">${evo.eno } ${evo.ex }</div>
 			</c:forEach>
 			</li>
 			
@@ -376,14 +375,21 @@ $(function(){
 				<div class="col-md-2 title_label">작성일</div>
 				<div class="col-md-10">
 					<fmt:formatDate value="${vo.writeDate }" pattern="yyyy.MM.dd" />
-					<fmt:formatDate value="${vo.writeDate }" pattern="hh:mm:ss" />
 				</div>
 			</li>
 		</ul>
+		
+		<c:if test="${login.gradeNo == 9 }">
+		
+		</c:if>
+
+		<c:if test="${login.gradeNo == 9 || login.id == vo.id && vo.accept == '대기' }">
 		<a
 			href="update.do?no=${vo.no }&page=${pageObject.page}&perPageNum=${pageObject.perPageNum}&key=${pageObject.key}&word=${pageObject.word}"
 			class="btn btn-default">수정</a> <a class="btn btn-default"
 			data-toggle="modal" data-target="#myModal" onclick="return false;">삭제</a>
+			</c:if>
+			
 		<a
 			href="list.do?page=${pageObject.page }&perPageNum=${pageObject.perPageNum}&key=${pageObject.key}&word=${pageObject.word}"
 			class="btn btn-default">리스트</a>
@@ -433,35 +439,34 @@ $(function(){
 		<!-- container 끝 -->
 
 		<!-- Modal - 게시판 글 삭제시 사용되는 모달 창 -->
-		<div id="myModal" class="modal fade" role="dialog">
-			<div class="modal-dialog">
+<!-- 		<div id="myModal" class="modal fade" role="dialog"> -->
+<!-- 			<div class="modal-dialog"> -->
 
-				<!-- Modal content-->
-				<div class="modal-content">
-					<div class="modal-header">
-						<button type="button" class="close" data-dismiss="modal">&times;</button>
-						<h4 class="modal-title">게시판 글삭제 비밀번호 입력</h4>
-					</div>
-					<div class="modal-body">
-						<form action="delete.do" method="post" id="modal_form">
-							<input type="hidden" name="no" value="${vo.no }"> <input
-								type="hidden" name="perPageNum"
-								value="${pageObject.perPageNum }">
-							<div class="form-group">
-								<label>비밀번호 : </label> <input name="pw" type="password"
-									class="form-control" id="pw" pattern="[^가-힣ㄱ-ㅎㅏ-]{4,20}"
-									required="required" title="비밀번호는 4-20자까지 입력, 한글은 입력할 수 없습니다." />
-							</div>
-						</form>
-					</div>
-					<div class="modal-footer">
-						<button type="button" class="btn btn-default" id="modal_deleteBtn">삭제</button>
-						<button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
-					</div>
-				</div>
-
-			</div>
-		</div>
+<!-- 				Modal content -->
+<!-- 				<div class="modal-content"> -->
+<!-- 					<div class="modal-header"> -->
+<!-- 						<button type="button" class="close" data-dismiss="modal">&times;</button> -->
+<!-- 						<h4 class="modal-title">게시판 글삭제 비밀번호 입력</h4> -->
+<!-- 					</div> -->
+<!-- 					<div class="modal-body"> -->
+<!-- 						<form action="delete.do" method="post" id="modal_form"> -->
+<%-- 							<input type="hidden" name="no" value="${vo.no }"> <input --%>
+<!-- 								type="hidden" name="perPageNum" -->
+<%-- 								value="${pageObject.perPageNum }"> --%>
+<!-- 							<div class="form-group"> -->
+<!-- 								<label>비밀번호 : </label> <input name="pw" type="password" -->
+<!-- 									class="form-control" id="pw" pattern="[^가-힣ㄱ-ㅎㅏ-]{4,20}" -->
+<!-- 									required="required" title="비밀번호는 4-20자까지 입력, 한글은 입력할 수 없습니다." /> -->
+<!-- 							</div> -->
+<!-- 						</form> -->
+<!-- 					</div> -->
+<!-- 					<div class="modal-footer"> -->
+<!-- 						<button type="button" class="btn btn-default" id="modal_deleteBtn">삭제</button> -->
+<!-- 						<button type="button" class="btn btn-default" data-dismiss="modal">취소</button> -->
+<!-- 					</div> -->
+<!-- 				</div> -->
+<!-- 			</div> -->
+<!-- 		</div> -->
 		<!-- Modal - 게시판 글 삭제시 사용되는 모달 창의 끝 -->
 
 		<!-- Modal - 댓글 쓰기 / 수정 시 사용되는 모달 창 -->

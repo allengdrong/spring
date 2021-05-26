@@ -30,7 +30,7 @@ public class TqServiceImpl implements TqService {
 	private TqMapper mapper;
 
 	@Override
-	public List<TqVO> list(PageObject pageObject,String lev) throws Exception {
+	public List<TqVO> list(PageObject pageObject,String lev, String accept) throws Exception {
 		// TODO Auto-generated method stub
 		// 페이지 처리를 위한 전체 데이터 가져오기 - 추후(개발 완료)
 		// startRow와 endRow가 계산이 된다.
@@ -38,6 +38,7 @@ public class TqServiceImpl implements TqService {
 		log.info("pageObject" + pageObject);
 
 		Map<String, Object> map = new HashMap<>();
+		map.put("accept", accept);
 		map.put("lev", lev);
 		map.put("pageObject", pageObject);
 		

@@ -12,6 +12,13 @@
 		WHERE lev = #{lev}
 	</select>
 	
+	<!-- 문제 푼 회차 계산하기 -->
+	<select id="getMax" resultType="java.lang.Integer">
+		SELECT nvl(MAX(turn),0)
+		FROM solve
+		WHERE id = #{id}
+	</select>
+	
 	<!-- 랜덤으로 문제 번호 10개 가져오기 -->
 	<select id="random" resultType="java.lang.Integer">
 		SELECT no
@@ -34,13 +41,11 @@
 	<select id="quiz" resultType="com.mcbt.test.vo.TestVO">
 		SELECT no, quiz
 		FROM(
-		    SELECT ROWNUM rnum, no, quiz
-		        FROM (
-		                SELECT no, quiz
-		                FROM test
-		            )
+            SELECT no, quiz
+            FROM test
+		            
 			)
-		WHERE rnum = #{no}
+		WHERE no = #{no}
 	</select>
 	
 	<!-- 1.2 보기 가져오기  -->
@@ -58,15 +63,15 @@
 	
 	<!-- 다음 문제로 넘어가기 -->
 	<insert id="next"> 
-		INSERT INTO solve(list, id, no, pick)
-		VALUES(solve_seq.nextval, #{id}, #{no}, #{pick})
+		INSERT INTO solve(list, id, no, pick, turn)
+		VALUES(solve_seq.nextval, #{id}, #{no}, #{pick}, #{turn})
 	</insert>
 	
 	<!-- 점수 계산하기 -->
 	<select id="score" resultType="java.lang.Long">
 	SELECT COUNT(*)
     FROM test t, solve s
-    WHERE t.no = s.no AND s.pick = t.right AND s.id = #{id}
+    WHERE t.no = s.no AND s.pick = t.right AND s.id = #{id} AND s.turn = #{turn}
 	</select>
 	
 	<!-- 정답 페이지 -->
@@ -80,7 +85,7 @@
 		                FROM test
 		            )
 			)
-		WHERE rnum = #{no}
+		WHERE no = #{no}
 	</select>
 	
 	<!-- 1.2 보기 가져오기  -->

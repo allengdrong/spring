@@ -28,16 +28,16 @@
 			<label class="radio-inline"><input type="radio" name="lev" id="bottom" value="bottom">하</label>
 			</div>
 		
-			<div class="form-group">
+			<div class="form-inline form-group">
 				<label for="quiz">문제:</label>
 				<!-- required : 필수 입력, placeholder : 입력의 초기 안내,
 					 pattern : 정규표현식으로 유효성 검사, title : 패턴이 맞지 않을때 나오는 메시지 -->
 				<input name="quiz" type="text" class="form-control" id="quiz"
-				pattern=".{4,100}" maxlength="100" required="required"
+				pattern=".{2,100}" maxlength="100" required="required"
 				title="4자이상 100자 이하 입력" placeholder="4자이상 100자 이하 입력">
 			</div>
 			
-			<div class="form-group">
+			<div class="form-inline form-group">
 				<label for="id">아이디:</label> <input name="id" type="text" value="${login. id }"
 					class="form-control" id="id"
 					required="required" readonly="readonly">

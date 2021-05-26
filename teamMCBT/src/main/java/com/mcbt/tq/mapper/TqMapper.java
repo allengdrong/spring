@@ -3,6 +3,7 @@ package com.mcbt.tq.mapper;
 import java.util.List;
 import java.util.Map;
 
+import com.mcbt.board.vo.BoardVO;
 import com.mcbt.test.vo.TestVO;
 import com.mcbt.tq.vo.TqVO;
 import com.webjjang.util.PageObject;

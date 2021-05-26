@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.mcbt.test.vo.TestVO;
 import com.mcbt.tq.service.TqExService;
 import com.mcbt.tq.service.TqService;
 import com.mcbt.tq.vo.TqExVO;
@@ -41,9 +40,9 @@ public class TqController {
 
 	// 1. 문제 출제 게시판 리스트
 	@GetMapping("/list.do")
-	public String list(Model model, @ModelAttribute PageObject pageObject, String lev) throws Exception {
+	public String list(Model model, @ModelAttribute PageObject pageObject, String lev, String accept) throws Exception {
 		log.info("list().pageObject ...... " + pageObject);
-		model.addAttribute("list", service.list(pageObject, lev));
+		model.addAttribute("list", service.list(pageObject, lev, accept));
 		return MODULE + "/list";
 	}
 
@@ -57,6 +56,7 @@ public class TqController {
 		log.info("view().no : " + no + " - 게시판 글보기 --------------");
 
 		model.addAttribute("vo", service.view(no));
+		model.addAttribute("exvo", exservice.list(model, no));
 
 		return MODULE + "/view";
 	}
@@ -137,6 +137,7 @@ public class TqController {
 		// jsp에 수정할 데이터를 보내야 한다. 데이터가 DB에 있다. view()
 
 		model.addAttribute("vo", service.view(no));
+		model.addAttribute("exvo", exservice.list(model, no));
 
 		return MODULE + "/update";
 	}

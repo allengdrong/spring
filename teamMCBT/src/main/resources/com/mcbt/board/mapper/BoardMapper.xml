@@ -40,7 +40,7 @@
 		<!-- mybatis에서는 데이터 자동변환을 한다. 글자가 한자이면 char -->
 		<if test="word != null and word != ''.toString()">
 			<!-- 검색하는 데이터가 있는 경우 where가 나온다. -->
-			WHERE b.writer
+			WHERE 1 = 0
 			<if test="key == 't'.toString()">
 				OR title like '%' || #{word} || '%'
 			</if>
