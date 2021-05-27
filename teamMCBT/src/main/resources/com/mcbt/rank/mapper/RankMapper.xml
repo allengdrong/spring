@@ -5,7 +5,7 @@
 <mapper namespace="com.mcbt.rank.mapper.RankMapper">
 	<!-- 1. 게시판 목록 -->
 	<!-- id="method" -->
-	<select id="list" resultType="com.mcbt.rank.vo.RankVO" parameterType="string">
+	<select id="alist" resultType="com.mcbt.rank.vo.RankVO" parameterType="string">
 		SELECT RNUM, NO, ID, SCORE, TESTDATE, LEV
 		FROM(	
 			SELECT ROWNUM RNUM, NO, ID, SCORE, TESTDATE, LEV
@@ -19,6 +19,12 @@
 				)
 			)
 			WHERE rnum BETWEEN 1 AND 10
+	</select>
+	
+	<select id="list" resultType="com.mcbt.score.vo.ScoreVO">
+	SELECT id, score, turn, lev
+	FROM score
+	WHERE 	LEV = #{lev, jdbcType=VARCHAR}
 	</select>
 <!-- 		검색 조건 쿼리 따로 저장하기 -->
 <!-- 	<sql id="search"> -->

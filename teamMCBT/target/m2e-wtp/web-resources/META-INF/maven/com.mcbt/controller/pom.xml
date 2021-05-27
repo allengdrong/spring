@@ -14,7 +14,7 @@
 		<org.aspectj-version>1.9.0</org.aspectj-version>
 		<org.slf4j-version>1.7.25</org.slf4j-version>
 		<!-- project 절대 위치를 property로 설정 -->
-		<project.basedir>C:\ksh\workspace\spring\teamMCBT</project.basedir>
+		<project.basedir>D:\CHOI\workspace\spring\teamMCBT</project.basedir>
 	</properties>
 	<dependencies>
 		<!-- Spring -->
@@ -199,7 +199,7 @@
 		</dependency>
 
 		<!-- 페이지 처리 -->
-		<dependency>
+		<dependency> 
 			<groupId>com.webjjang</groupId>
 			<artifactId>util.PageObject</artifactId>
 			<version>2.5</version>

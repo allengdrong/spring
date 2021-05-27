@@ -22,7 +22,7 @@
 	</select>
 	
 	<insert id="write">
-		insert into reply(rno, no, replyer, pw, replyContent)
-		values(reply_seq.nextval, #{no, jdbcType=VARCHAR}, #{replyer, jdbcType=VARCHAR}, #{pw, jdbcType=VARCHAR}, #{replyContent, jdbcType=VARCHAR})
+		insert into reply(rno, no, replyer, replyContent)
+		values(reply_seq.nextval, #{no, jdbcType=VARCHAR}, #{replyer, jdbcType=VARCHAR}, #{replyContent, jdbcType=VARCHAR})
 	</insert>
 </mapper>

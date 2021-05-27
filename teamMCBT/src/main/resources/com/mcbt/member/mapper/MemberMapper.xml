@@ -6,14 +6,15 @@
 <mapper namespace="com.mcbt.member.mapper.MemberMapper">
 
 	<select id="list" resultType="com.mcbt.member.vo.MemberVO">
-		SELECT id, name, alias, gender, birth, tel, email, regDate
+		SELECT id, name, alias, gender, birth, tel, email, regDate, gradeNo, status
 		from member
 	</select>
 	
-	<select id="view" resultType="com.mcbt.board.vo.BoardVO">
-		SELECT id, pw, name, alias, gender, birth, tel, email, regDate
-		FROM member
-	</select>
+<!-- 	<select id="view" resultType="com.mcbt.member.vo.MemberVO"> -->
+<!-- 		select -->
+<!-- 		id, pw, name, alias, gender, birth, tel, email, regDate -->
+<!-- 		from member -->
+<!-- 	</select> -->
 	
 	<select id="login" resultType="com.mcbt.member.vo.LoginVO">
 		select id, name, gradeNo
@@ -25,12 +26,28 @@
 		values( #{id}, #{pw}, #{name}, #{alias}, #{gender}, #{birth}, #{tel}, #{email})
 	</insert>
 	
+		<select id="view" resultType="com.mcbt.member.vo.MemberVO">
+		SELECT gradeNo, id, pw, name, alias, gender, birth, tel , email, regDate
+		
+		FROM member where id = #{id}
+		
+	</select>
+	
 	<!--회원 정보수정 -->
-	<update id="memberUpdate">
+	<update id="Update">
 		UPDATE member
 		USERPW = #{pw},
 		USERALIAS = #{alias}
-		WHERE USERID = #{userId}
+		USERTEL = #{tel}
+		USEREMAIL = #{email}
+		WHERE USERID = #{id}
 	</update>
 	
+	<!-- 탈퇴 -->
+	<delete id="delete">
+		DELETE FROM member
+		WHERE USERID = #{id}
+			AND USERPW = #{pw}
+	</delete>
+
 </mapper>

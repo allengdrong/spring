@@ -63,8 +63,8 @@
 	
 	<!-- 다음 문제로 넘어가기 -->
 	<insert id="next"> 
-		INSERT INTO solve(list, id, no, pick, turn)
-		VALUES(solve_seq.nextval, #{id}, #{no}, #{pick}, #{turn})
+		INSERT INTO solve(list, id, no, pick, turn, lev)
+		VALUES(solve_seq.nextval, #{id}, #{no}, #{pick}, #{turn}, #{lev})
 	</insert>
 	
 	<!-- 점수 계산하기 -->
@@ -73,6 +73,12 @@
     FROM test t, solve s
     WHERE t.no = s.no AND s.pick = t.right AND s.id = #{id} AND s.turn = #{turn}
 	</select>
+	
+	<!-- 점수 DB에 넣기 -->
+	<insert id="scoreIn">
+	INSERT INTO score(no, id, turn, score, lev)
+	VALUES(score_seq.nextval, #{vo.id}, #{vo.turn}, #{correct}, #{vo.lev})
+	</insert>
 	
 	<!-- 정답 페이지 -->
 	<!-- 1-1. 문제 가져오기 -->
