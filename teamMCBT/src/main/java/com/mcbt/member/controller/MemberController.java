@@ -22,7 +22,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.mcbt.board.vo.BoardVO;
 import com.mcbt.member.service.MemberService;
 import com.mcbt.member.vo.LoginVO;
 import com.mcbt.member.vo.MemberVO;

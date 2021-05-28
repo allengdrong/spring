@@ -147,7 +147,6 @@ article {
 						<li><a href="${path }/solve/main.do">문제풀기</a></li>
 						<li><a href="${path }/rank/list.do">순위</a></li>
 						<li><a href="${path }/board/list.do">게시판</a></li>
-						<!-- $amp; : &, &lt; : <, &gt; : >. &ndsp; : blank -->
 						<li><a href="${path }/tq/list.do">문제출제</a></li>
 						<c:if test="${login.gradeNo == 9 }">
 						<li><a href="${path }/test/list.do">문제제작</a></li>

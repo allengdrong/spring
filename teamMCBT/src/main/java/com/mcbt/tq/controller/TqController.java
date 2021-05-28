@@ -49,7 +49,6 @@ public class TqController {
 	// 2. 문제 출제 게시판 글보기 / view.do - get
 	@GetMapping("/view.do")
 	// Model 객체 - 처리된 데이터를 JSP에 전달
-	// no, inc - 숫자 타입 : 원래는 String으로 데이터 전달. 없으면 null이 된다.
 	// null을 숫자로 변환하는 과정에서 오류가 난다.
 	public String view(Model model, Long no, @ModelAttribute PageObject pageObject) throws Exception {
 

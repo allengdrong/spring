@@ -35,12 +35,14 @@ ul.chat>li {
 	margin-bottom: 15px;
 }
 
- pre {
- 	 font-family: 'CookieRun-Regular';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/CookieRun-Regular.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
- }
+pre {
+	font-family: 'CookieRun-Regular';
+	src:
+		url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/CookieRun-Regular.woff')
+		format('woff');
+	font-weight: normal;
+	font-style: normal;
+}
 </style>
 
 <script type="text/javascript">
@@ -365,7 +367,7 @@ $(function(){
 			<tr>
 				<th>보기</th>
 				<td><c:forEach items="${exvo }" var="evo">
-						<div>${evo.eno }. ${evo.ex }</div>
+						<div>${evo.eno }.${evo.ex }</div>
 					</c:forEach></td>
 			</tr>
 			<tr>
@@ -378,60 +380,6 @@ $(function(){
 						pattern="yyyy.MM.dd" /></td>
 			</tr>
 		</table>
-<!-- 		<!-- 데이터 표시하는 부분 -->
-<!-- 		<ul class="list-group"> -->
-<!-- 			<li class="list-group-item row"> -->
-<!-- 				<div class="col-md-2 title_label">번호</div> -->
-<!-- 				<div class="col-12"> -->
-<%-- 					<span class="col-md-10">${vo.no }</span> --%>
-<%-- 					<c:if test="${vo.accept == '대기' }"> --%>
-<!-- 						<div class="col-3 label label-default pull-right" -->
-<%-- 							style="width: 5em; height: 2em; align-content: center; padding-top: 0.5em; margin-top: 1em;">${vo.accept }</div> --%>
-<%-- 					</c:if> --%>
-<%-- 					<c:if test="${vo.accept == '승인' }"> --%>
-<!-- 						<div class="col-3 label label-primary pull-right" -->
-<!-- 							style="width: 5em; height: 2em; align-content: center; padding-top: 0.5em; margin-top: 1em;"> -->
-<%-- 							<span style="padding-top: 3em;">${vo.accept }</span> --%>
-<!-- 						</div> -->
-<%-- 					</c:if> --%>
-<%-- 					<c:if test="${vo.accept == '거절' }"> --%>
-<!-- 						<div class="col-3 label label-danger pull-right" -->
-<!-- 							style="width: 5em; height: 2em; align-content: center; padding-top: 0.5em; margin-top: 1em;"> -->
-<%-- 							<span style="padding-top: 3em;">${vo.accept }</span> --%>
-<!-- 						</div> -->
-<%-- 					</c:if> --%>
-<!-- 				</div> -->
-<!-- 			</li> -->
-<!-- 			<li class="list-group-item row"> -->
-<!-- 				<div class="col-md-2 title_label">난이도</div> -->
-<%-- 				<div class="col-md-10">${vo.lev }</div> --%>
-<!-- 			</li> -->
-<!-- 			<li class="list-group-item row"> -->
-<!-- 				<div class="col-md-2 title_label">문제</div> -->
-<%-- 				<div class="col-md-10">${vo.quiz }</div> --%>
-<!-- 			</li> -->
-<!-- 			<li class="list-group-item row"> -->
-<%-- 				<div class="col-md-2 title_label">보기</div> <c:forEach --%>
-<%-- 					items="${exvo }" var="evo"> --%>
-<%-- 					<div class="col-md-10 ex">${evo.eno }${evo.ex }</div> --%>
-<%-- 				</c:forEach> --%>
-<!-- 			</li> -->
-
-<!-- 			<li class="list-group-item row"> -->
-<!-- 				<div class="col-md-2 title_label">정답</div> -->
-<%-- 				<div class="col-md-10">${vo.right }</div> --%>
-<!-- 			</li> -->
-<!-- 			<li class="list-group-item row"> -->
-<!-- 				<div class="col-md-2 title_label">아이디</div> -->
-<%-- 				<div class="col-md-10">${vo.id }</div> --%>
-<!-- 			</li> -->
-<!-- 			<li class="list-group-item row"> -->
-<!-- 				<div class="col-md-2 title_label">작성일</div> -->
-<!-- 				<div class="col-md-10"> -->
-<%-- 					<fmt:formatDate value="${vo.writeDate }" pattern="yyyy.MM.dd" /> --%>
-<!-- 				</div> -->
-<!-- 			</li> -->
-<!-- 		</ul> -->
 
 		<c:if test="${login.gradeNo == 9 }">
 		</c:if>
@@ -444,15 +392,16 @@ $(function(){
 			<a
 				href="update.do?no=${vo.no }&page=${pageObject.page}&perPageNum=${pageObject.perPageNum}&key=${pageObject.key}&word=${pageObject.word}"
 				class="btn btn-default">수정</a>
-			<a href="delete.do?no=${vo.no }"
-			class="btn btn-default" data-toggle="modal" data-target="#myModal"
-				onclick="return false;">삭제</a>
+			<a href="delete.do?no=${vo.no }" class="btn btn-default"
+				data-toggle="modal" data-target="#myModal" onclick="return false;">삭제</a>
 		</c:if>
 
 		<a
 			href="list.do?page=${pageObject.page }&perPageNum=${pageObject.perPageNum}&key=${pageObject.key}&word=${pageObject.word}"
 			class="btn btn-default">리스트</a>
-			<div><br/></div>
+		<div>
+			<br />
+		</div>
 
 		<!-- 댓글의 시작 -->
 		<div class="row" style="margin-top: 20px- 40px;">
@@ -475,9 +424,9 @@ $(function(){
 									</div>
 									<div class="content-Text">테스트중</div>
 									<div class="text-right">
-									<c:if test="${login.gradeNo == 9 || login.id == vo.id }">
-										<button class="btn btn-default btn-xs replyUpdateBtn">수정</button>
-										<button class="btn btn-default btn-xs replyDeleteBtn">삭제</button>
+										<c:if test="${login.gradeNo == 9 || login.id == vo.id }">
+											<button class="btn btn-default btn-xs replyUpdateBtn">수정</button>
+											<button class="btn btn-default btn-xs replyDeleteBtn">삭제</button>
 										</c:if>
 									</div>
 								</div>
@@ -500,35 +449,29 @@ $(function(){
 	</div>
 	<!-- container 끝 -->
 
-<!-- 	Modal - 게시판 글 삭제시 사용되는 모달 창 -->
-			<div id="myModal" class="modal fade" role="dialog">
-				<div class="modal-dialog">
+	<!-- 	Modal - 게시판 글 삭제시 사용되는 모달 창 -->
+	<div id="myModal" class="modal fade" role="dialog">
+		<div class="modal-dialog">
 
-<!-- 					Modal content -->
-					<div class="modal-content">
-						<div class="modal-header">
-							<button type="button" class="close" data-dismiss="modal">&times;</button>
-							<h4 class="modal-title">게시판 글삭제</h4>
-						</div>
-						<div class="modal-body">
-							<form action="delete.do" method="post" id="modal_form">
-								<input type="hidden" name="no" value="${vo.no }"> <input
-									type="hidden" name="perPageNum"
-									value="${pageObject.perPageNum }">
-<!-- 								<div class="form-group"> -->
-<!-- 									<label>비밀번호 : </label> <input name="pw" type="password" -->
-<!-- 										class="form-control" id="pw" pattern="[^가-힣ㄱ-ㅎㅏ-]{4,20}" -->
-<!-- 										required="required" title="비밀번호는 4-20자까지 입력, 한글은 입력할 수 없습니다." /> -->
-<!-- 								</div> -->
-							</form>
-						</div>
-						<div class="modal-footer">
-							<button type="button" class="btn btn-default" id="modal_deleteBtn">삭제</button>
-							<button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
-						</div>
-					</div>
+			<!-- 					Modal content -->
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<h4 class="modal-title">게시판 글삭제</h4>
+				</div>
+				<div class="modal-body">
+					<form action="delete.do" method="post" id="modal_form">
+						<input type="hidden" name="no" value="${vo.no }"> <input
+							type="hidden" name="perPageNum" value="${pageObject.perPageNum }">
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" id="modal_deleteBtn">삭제</button>
+					<button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
 				</div>
 			</div>
+		</div>
+	</div>
 	<!-- Modal - 게시판 글 삭제시 사용되는 모달 창의 끝 -->
 
 	<!-- Modal - 댓글 쓰기 / 수정 시 사용되는 모달 창 -->
@@ -565,11 +508,6 @@ $(function(){
 								class="form-control" id="replyId" readonly="readonly"
 								value="${login. id }">
 						</div>
-						<!-- 							<div class="form-group" id="replyDeleteAlert"> -->
-						<!-- 								<label for="replyPW">비밀번호:</label>  -->
-						<!-- 								<input name="pw"type="text" class="form-control" id="replyPw" -->
-						<!-- 								 pattern=".{4,20}"> -->
-						<!-- 							</div> -->
 					</form>
 				</div>
 				<div class="modal-footer">

@@ -29,12 +29,6 @@
 					class="form-control" id="no" value="${vo.no }" readonly="readonly">
 			</div>
 
-			<!-- 			<div class="form-group"> -->
-			<!-- 				<label for="lev">난이도:</label> <input name="lev" type="text" -->
-			<%-- 					class="form-control" id="lev" value="${vo.lev }" --%>
-			<!-- 					readonly="readonly"> -->
-			<!-- 			</div> -->
-
 			<div class="form-group">
 				<label for="lev">난이도:</label> <select name="lev"
 					class="form-control" id="lev" ${vo.lev }>
@@ -43,11 +37,6 @@
 					<option>bottom</option>
 				</select>
 			</div>
-
-			<!-- 			<div class="form-group"> -->
-			<!-- 				<label for="accept">승인:</label> <input name="accept" type="text" -->
-			<%-- 					class="form-control" id="accept" value="${vo.accept }"> --%>
-			<!-- 			</div> -->
 
 			<c:if test="${login.gradeNo == 9}">
 				<div class="form-group">
@@ -68,14 +57,6 @@
 					pattern=".{4,100}" maxlength="100" required="required"
 					value="${vo.quiz }">
 			</div>
-
-			<!-- 			<div class="form-group"> -->
-			<!-- 				<label for="ex">보기:</label> -->
-			<%-- 				<c:forEach items="${exvo }" var = "exvo"> --%>
-			<%-- 				${exvo.eno } --%>
-			<%-- 				<input name="ex" class="form-control" id="ex" value="${exvo.ex }"> --%>
-			<%-- 				</c:forEach> --%>
-			<!-- 			</div> -->
 
 			<label for="ex">보기:</label>
 			<div class="input-group">
